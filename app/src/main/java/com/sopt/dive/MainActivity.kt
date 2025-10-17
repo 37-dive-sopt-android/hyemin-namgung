@@ -66,17 +66,17 @@ class MainActivity : ComponentActivity() {
         ) {
             Text(
                 text = " 가입을 축하합니다 !  ",
-                modifier = Modifier.padding(bottom = 20.dp),
                 textAlign = TextAlign.Center,
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
             )
             Text(
                 text = " 가입 정보 확인  ",
-                modifier = Modifier.padding(bottom = 20.dp),
                 fontSize = 20.sp,
                color = Color.Gray
             )
+            Spacer(modifier = Modifier.padding(vertical = 10.dp))
+
             Text(text = "ID", fontSize = 30.sp, fontWeight = FontWeight.Bold)
             Text(text = id, fontSize = 20.sp)
 

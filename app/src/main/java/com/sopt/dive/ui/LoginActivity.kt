@@ -36,7 +36,10 @@ import com.sopt.dive.MainActivity
 
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -65,7 +68,6 @@ class LoginActivity : ComponentActivity() {
         var signupNickname by remember { mutableStateOf("") }
         var signupBirthday by remember { mutableStateOf("") }
 
-
         val signUpLauncher =
             rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
@@ -81,6 +83,8 @@ class LoginActivity : ComponentActivity() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(20.dp)
+                .imePadding()
+                .verticalScroll(rememberScrollState())
         ) {
             Text(
                 text = "Welcome To SOPT",
@@ -158,8 +162,7 @@ class LoginActivity : ComponentActivity() {
                             }
                         )
                     } else {
-                        Toast.makeText(context, "아이디 또는 비밀번호가 올바르지 않습니다.", Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(context, "아이디 또는 비밀번호가 올바르지 않습니다.", Toast.LENGTH_SHORT).show()
                     }
                 },
                 modifier

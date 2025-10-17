@@ -224,6 +224,9 @@ class SignUpActivity : ComponentActivity() {
                         setResult(Activity.RESULT_OK, resultIntent)
                         finish()
                     }
+                    else {
+                        Toast.makeText(context, "모든 정보를 입력해주세요", Toast.LENGTH_SHORT).show()
+                    }
                 },
                 modifier
                     .fillMaxWidth()
