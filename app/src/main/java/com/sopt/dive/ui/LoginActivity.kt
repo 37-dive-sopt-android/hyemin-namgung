@@ -98,8 +98,7 @@ class LoginActivity : ComponentActivity() {
             Color.Transparent
             Spacer(modifier = Modifier.padding(vertical = 20.dp))
             Text(
-                text = "ID",
-                fontSize = 30.sp
+                text = "ID", fontSize = 30.sp
             )
             var idText by remember { mutableStateOf("") }
             TextField(
@@ -110,8 +109,7 @@ class LoginActivity : ComponentActivity() {
                     .background(color = Color.Transparent),
                 placeholder = { Text("아이디를 입력해주세요") },
                 colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.Transparent
+                    focusedContainerColor = Color.White, unfocusedContainerColor = Color.Transparent
                 ),
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
@@ -122,8 +120,7 @@ class LoginActivity : ComponentActivity() {
 
 
             Text(
-                text = "PW",
-                fontSize = 30.sp
+                text = "PW", fontSize = 30.sp
 
             )
             var pwText by remember { mutableStateOf("") }
@@ -134,8 +131,7 @@ class LoginActivity : ComponentActivity() {
                     .fillMaxWidth()
                     .background(color = Color.White),
                 colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.Transparent
+                    focusedContainerColor = Color.White, unfocusedContainerColor = Color.Transparent
                 ),
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next, keyboardType = KeyboardType.Password
@@ -159,14 +155,12 @@ class LoginActivity : ComponentActivity() {
                                 putExtra("pw", signupPw)
                                 putExtra("nickname", signupNickname)
                                 putExtra("birthday", signupBirthday)
-                            }
-                        )
+                            })
                     } else {
-                        Toast.makeText(context, "아이디 또는 비밀번호가 올바르지 않습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "아이디 또는 비밀번호가 올바르지 않습니다.", Toast.LENGTH_SHORT)
+                            .show()
                     }
-                },
-                modifier
-                    .fillMaxWidth()
+                }, modifier.fillMaxWidth()
 
             ) { Text("Welcome To Sopt") }
 

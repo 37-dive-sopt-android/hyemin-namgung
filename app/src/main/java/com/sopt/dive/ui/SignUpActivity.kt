@@ -24,7 +24,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -45,10 +44,10 @@ class SignUpActivity : ComponentActivity() {
         }
     }
 
-    fun isValidBirthday (birthday : String) : Boolean{
+    fun isValidBirthday(birthday: String): Boolean {
 
         val regex = Regex("^(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$")
-        if(regex.matches(birthday)) return true
+        if (regex.matches(birthday)) return true
 
         return false
     }
@@ -90,8 +89,7 @@ class SignUpActivity : ComponentActivity() {
                     .background(color = Color.Transparent),
                 placeholder = { Text("아이디를 입력해주세요") },
                 colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.Transparent
+                    focusedContainerColor = Color.White, unfocusedContainerColor = Color.Transparent
                 ),
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
@@ -100,8 +98,7 @@ class SignUpActivity : ComponentActivity() {
                 supportingText = {
                     if (idError != null) {
                         Text(
-                            text = idError!!,
-                            fontSize = 12.sp
+                            text = idError!!, fontSize = 12.sp
                         )
                     }
                 },
@@ -119,8 +116,7 @@ class SignUpActivity : ComponentActivity() {
                     .background(color = Color.Transparent),
                 placeholder = { Text("비밀번호를 입력해주세요") },
                 colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.Transparent
+                    focusedContainerColor = Color.White, unfocusedContainerColor = Color.Transparent
                 ),
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next, keyboardType = KeyboardType.Password
@@ -131,8 +127,7 @@ class SignUpActivity : ComponentActivity() {
                 supportingText = {
                     if (pwError != null) {
                         Text(
-                            text = pwError!!,
-                            fontSize = 12.sp
+                            text = pwError!!, fontSize = 12.sp
                         )
                     }
                 },
@@ -149,8 +144,7 @@ class SignUpActivity : ComponentActivity() {
                     .background(color = Color.Transparent),
                 placeholder = { Text("닉네임을 입력해주세요") },
                 colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.Transparent
+                    focusedContainerColor = Color.White, unfocusedContainerColor = Color.Transparent
                 ),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
@@ -160,8 +154,7 @@ class SignUpActivity : ComponentActivity() {
                 supportingText = {
                     if (nicknameError != null) {
                         Text(
-                            text = nicknameError!!,
-                            fontSize = 12.sp
+                            text = nicknameError!!, fontSize = 12.sp
                         )
                     }
                 },
@@ -177,44 +170,35 @@ class SignUpActivity : ComponentActivity() {
                     .background(color = Color.Transparent),
                 placeholder = { Text("생일 4자리를  입력해주세요") },
                 colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.Transparent
+                    focusedContainerColor = Color.White, unfocusedContainerColor = Color.Transparent
                 ),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done
+                    keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
                 ),
                 isError = birthdayError != null,
                 supportingText = {
                     if (birthdayError != null) {
                         Text(
-                            text = birthdayError!!,
-                            fontSize = 12.sp
+                            text = birthdayError!!, fontSize = 12.sp
                         )
                     }
-                }
-            )
+                })
 
             Spacer(modifier = Modifier.weight(1f))
 
             Button(
                 onClick = {
-                    idError = (if (idText.length !in 6..10)
-                        "ID는 6~10글자 사이여야 합니다. " else null)
+                    idError = (if (idText.length !in 6..10) "ID는 6~10글자 사이여야 합니다. " else null)
 
-                    pwError = (if (pwText.length !in 8..12)
-                        "비밀번호는 8 ~12 글자 사이여야 합니다. " else null)
+                    pwError = (if (pwText.length !in 8..12) "비밀번호는 8 ~12 글자 사이여야 합니다. " else null)
 
-                    nicknameError = (if (nicknameText.isBlank())
-                        "닉네임을 입력해주세요" else null)
+                    nicknameError = (if (nicknameText.isBlank()) "닉네임을 입력해주세요" else null)
 
-                    birthdayError = if (!isValidBirthday(birthdayInt))
-                        "생일 형식으로 입력해주세요." else null
+                    birthdayError = if (!isValidBirthday(birthdayInt)) "생일 형식으로 입력해주세요." else null
 
                     if (idError == null && pwError == null && nicknameError == null && birthdayError == null) {
-                        Toast.makeText(context, "회원가입이 성공적으로 이루어졌습니다.", Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(context, "회원가입이 성공적으로 이루어졌습니다.", Toast.LENGTH_SHORT).show()
                         val resultIntent = Intent().apply {
                             putExtra("id", idText)
                             putExtra("pw", pwText)
@@ -223,13 +207,10 @@ class SignUpActivity : ComponentActivity() {
                         }
                         setResult(Activity.RESULT_OK, resultIntent)
                         finish()
-                    }
-                    else {
+                    } else {
                         Toast.makeText(context, "모든 정보를 입력해주세요", Toast.LENGTH_SHORT).show()
                     }
-                },
-                modifier
-                    .fillMaxWidth()
+                }, modifier.fillMaxWidth()
 
             ) { Text("회원가입하기") }
         }

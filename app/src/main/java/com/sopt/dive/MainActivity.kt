@@ -1,6 +1,5 @@
 package com.sopt.dive
 
-import android.R
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
@@ -41,17 +40,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             DiveTheme {
                 Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    content = {
+                    modifier = Modifier.fillMaxSize(), content = {
                         MainScreen(
-                            id!!,
-                            pw!!,
-                            nickname!!,
-                            birthday!!,
-                            modifier = Modifier
+                            id!!, pw!!, nickname!!, birthday!!, modifier = Modifier
                         )
-                    }
-                )
+                    })
             }
         }
 
@@ -62,7 +55,8 @@ class MainActivity : ComponentActivity() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)
+                .padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             Text(
                 text = " 가입을 축하합니다 !  ",
@@ -71,9 +65,7 @@ class MainActivity : ComponentActivity() {
                 fontWeight = FontWeight.Bold,
             )
             Text(
-                text = " 가입 정보 확인  ",
-                fontSize = 20.sp,
-               color = Color.Gray
+                text = " 가입 정보 확인  ", fontSize = 20.sp, color = Color.Gray
             )
             Spacer(modifier = Modifier.padding(vertical = 10.dp))
 
@@ -110,7 +102,8 @@ class MainActivity : ComponentActivity() {
             id = "dafault_id",
             pw = "dafault_pw",
             nickname = "dafault_nickname",
-            birthday = "dafault_birthday", modifier = Modifier
+            birthday = "dafault_birthday",
+            modifier = Modifier
         )
     }
 
