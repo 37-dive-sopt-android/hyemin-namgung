@@ -31,6 +31,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.ui.theme.DiveTheme
 
@@ -39,21 +40,19 @@ class SignUpActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             DiveTheme {
-                SignUp()
+                SignUpScreen()
             }
         }
     }
 
-    fun isValidBirthday(birthday: String): Boolean {
+    private val birthdayRegex = Regex("^(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$")
 
-        val regex = Regex("^(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$")
-        if (regex.matches(birthday)) return true
-
-        return false
+    private fun isValidBirthday(birthday: String): Boolean {
+        return birthdayRegex.matches(birthday)
     }
 
     @Composable
-    fun SignUp(modifier: Modifier = Modifier) {
+    fun SignUpScreen(modifier: Modifier = Modifier) {
         val context = LocalContext.current
         var idText by remember { mutableStateOf("") }
         var pwText by remember { mutableStateOf("") }
@@ -66,7 +65,7 @@ class SignUpActivity : ComponentActivity() {
         var birthdayError by remember { mutableStateOf<String?>(null) }
 
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .padding(20.dp)
         ) {
@@ -210,7 +209,7 @@ class SignUpActivity : ComponentActivity() {
                     } else {
                         Toast.makeText(context, "모든 정보를 입력해주세요", Toast.LENGTH_SHORT).show()
                     }
-                }, modifier.fillMaxWidth()
+                }, Modifier.fillMaxWidth()
 
             ) { Text("회원가입하기") }
         }
@@ -219,9 +218,9 @@ class SignUpActivity : ComponentActivity() {
 
     @Preview
     @Composable
-    fun SignUpPreview() {
+    private fun SignUpPreview() {
         DiveTheme {
-            SignUp()
+            SignUpScreen()
         }
     }
 }

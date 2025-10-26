@@ -45,6 +45,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 
 import com.sopt.dive.ui.theme.DiveTheme
+import com.sopt.dive.util.IntentKeys
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,7 +81,7 @@ class LoginActivity : ComponentActivity() {
                 }
             }
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .padding(20.dp)
                 .imePadding()
@@ -88,7 +89,7 @@ class LoginActivity : ComponentActivity() {
         ) {
             Text(
                 text = "Welcome To SOPT",
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp),
                 textAlign = TextAlign.Center,
@@ -151,16 +152,18 @@ class LoginActivity : ComponentActivity() {
                         Toast.makeText(context, "로그인에 성공했습니다", Toast.LENGTH_SHORT).show()
                         context.startActivity(
                             Intent(context, MainActivity::class.java).apply {
-                                putExtra("id", signupId)
-                                putExtra("pw", signupPw)
-                                putExtra("nickname", signupNickname)
-                                putExtra("birthday", signupBirthday)
+                                putExtra(IntentKeys.ID, signupId)
+                                putExtra(IntentKeys.PW, signupPw)
+                                putExtra(IntentKeys.NICKNAME, signupNickname)
+                                putExtra(IntentKeys.BIRTHDAY, signupBirthday)
+
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK
                             })
                     } else {
                         Toast.makeText(context, "아이디 또는 비밀번호가 올바르지 않습니다.", Toast.LENGTH_SHORT)
                             .show()
                     }
-                }, modifier.fillMaxWidth()
+                }, Modifier.fillMaxWidth()
 
             ) { Text("Welcome To Sopt") }
 
@@ -184,7 +187,7 @@ class LoginActivity : ComponentActivity() {
 
     @Preview(showBackground = true)
     @Composable
-    fun LoginPreview() {
+    private fun LoginPreview() {
         DiveTheme {
             LoginScreen()
 

@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.ui.LoginActivity
 import com.sopt.dive.ui.theme.DiveTheme
+import com.sopt.dive.util.IntentKeys
 
 class MainActivity : ComponentActivity() {
 
@@ -32,28 +33,38 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val id = intent.getStringExtra("id")
-        val pw = intent.getStringExtra("pw")
-        val nickname = intent.getStringExtra("nickname")
-        val birthday = intent.getStringExtra("birthday")
+        val id = intent.getStringExtra(IntentKeys.ID)
+        val pw = intent.getStringExtra(IntentKeys.PW)
+        val nickname = intent.getStringExtra(IntentKeys.NICKNAME)
+        val birthday = intent.getStringExtra(IntentKeys.BIRTHDAY)
 
         setContent {
             DiveTheme {
                 Scaffold(
-                    modifier = Modifier.fillMaxSize(), content = {
-                        MainScreen(
-                            id!!, pw!!, nickname!!, birthday!!, modifier = Modifier
-                        )
-                    })
+                    modifier = Modifier.fillMaxSize()
+                ) { innerPadding ->
+                    MainScreen(
+                        id = id ?: "", pw = pw ?: "",
+                        nickname = nickname ?: "",
+                        birthday = birthday ?: "",
+                        modifier = Modifier.padding(innerPadding)
+                    )
+                }
             }
         }
 
     }
 
     @Composable
-    fun MainScreen(id: String, pw: String, nickname: String, birthday: String, modifier: Modifier) {
+    fun MainScreen(
+        id: String,
+        pw: String,
+        nickname: String,
+        birthday: String,
+        modifier: Modifier = Modifier
+    ) {
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -103,9 +114,7 @@ class MainActivity : ComponentActivity() {
             pw = "dafault_pw",
             nickname = "dafault_nickname",
             birthday = "dafault_birthday",
-            modifier = Modifier
         )
     }
 
 }
-
