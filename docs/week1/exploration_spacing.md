@@ -7,11 +7,11 @@
 공식 문서에서 `Modifier.padding()`와 `Spacer`의 설명
 - **Modifier.padding()**
   `Modifier.padding()` 은 내부 여백을 만들기 위한 도구이다.
-  <img width="909" height="333" alt="Image" src="https://github.com/user-attachments/assets/04905361-5243-4edd-9270-39efeceef50c" />
+  <img width="817" height="321" alt="Image" src="https://github.com/user-attachments/assets/5db87236-355c-4839-8224-2714d0fb3f20" />
 
 - **Spacer**
   `Spacer`는 요소 간의 빈 공간을 만들어주는 레이아웃 컴포저블이다.
-  <img width="817" height="321" alt="Image" src="https://github.com/user-attachments/assets/5db87236-355c-4839-8224-2714d0fb3f20" />
+  <img width="909" height="333" alt="Image" src="https://github.com/user-attachments/assets/04905361-5243-4edd-9270-39efeceef50c" />
 
 
 
