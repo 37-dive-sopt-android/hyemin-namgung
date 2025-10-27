@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 import androidx.compose.ui.unit.sp
+import com.sopt.dive.ui.components.CommonTextField
 import com.sopt.dive.ui.theme.DiveTheme
 
 class SignUpActivity : ComponentActivity() {
@@ -80,6 +81,9 @@ class SignUpActivity : ComponentActivity() {
             Spacer(modifier = Modifier.weight(1f))
 
             Text(text = "ID")
+//            CommonTextField (placeMessage = "아이디를 입력해주세요", keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next))
+
+
             TextField(
                 value = idText,
                 onValueChange = { idText = it },
