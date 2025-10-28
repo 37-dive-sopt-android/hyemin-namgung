@@ -6,17 +6,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,7 +37,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
+import com.sopt.dive.ui.components.CommonButton
+import com.sopt.dive.ui.components.CommonInputField
 
 import com.sopt.dive.ui.theme.DiveTheme
 import com.sopt.dive.util.IntentKeys
@@ -68,6 +64,9 @@ class LoginActivity : ComponentActivity() {
         var signupPw by remember { mutableStateOf("") }
         var signupNickname by remember { mutableStateOf("") }
         var signupBirthday by remember { mutableStateOf("") }
+
+        var idText by remember { mutableStateOf("") }
+        var pwText by remember { mutableStateOf("") }
 
         val signUpLauncher =
             rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -96,59 +95,29 @@ class LoginActivity : ComponentActivity() {
                 fontWeight = FontWeight.Bold,
                 fontSize = 30.sp
             )
-            Color.Transparent
-            Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
-
-            Text(
-                text = "ID", fontSize = 30.sp
-            )
-            var idText by remember { mutableStateOf("") }
-            TextField(
-                value = idText,
-                onValueChange = { idText = it },
-                Modifier
-                    .fillMaxWidth()
-                    .background(color = Color.Transparent),
-                placeholder = { Text("아이디를 입력해주세요") },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White, unfocusedContainerColor = Color.Transparent
-                ),
+            // "CommonInputField 나중에 적절한 순서로 바꾸기 ")
+            CommonInputField(
+                text = "id", value = idText,
+                placeMessage = "아이디를 입력해주세요",
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
                 ),
-                singleLine = true
+                onValueChange = { idText = it }
             )
-            Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
 
-            Text(
-                text = "PW", fontSize = 30.sp
 
-            )
-            var pwText by remember { mutableStateOf("") }
-            TextField(
-                value = pwText,
-                onValueChange = { pwText = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = Color.White),
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White, unfocusedContainerColor = Color.Transparent
-                ),
+            CommonInputField(
+                text = "pw", value = pwText,
+                placeMessage = "아이디를 입력해주세요",
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next, keyboardType = KeyboardType.Password
                 ),
-                placeholder = {
-                    Text("비밀번호를 입력해주세요")
+                onValueChange = { pwText = it }
+            )
 
-                },
-                singleLine = true,
-                visualTransformation = PasswordVisualTransformation(),
-
-                )
-            Spacer(modifier = Modifier.weight(1f))
-            Button(
+            CommonButton(
                 onClick = {
                     if (idText == signupId && pwText == signupPw && idText.isNotBlank()) {
                         Toast.makeText(context, "로그인에 성공했습니다", Toast.LENGTH_SHORT).show()
@@ -165,9 +134,7 @@ class LoginActivity : ComponentActivity() {
                         Toast.makeText(context, "아이디 또는 비밀번호가 올바르지 않습니다.", Toast.LENGTH_SHORT)
                             .show()
                     }
-                }, Modifier.fillMaxWidth()
-
-            ) { Text("Welcome To Sopt") }
+                }, textMessage = "Welcome To Sopt")
 
             Text(
                 text = "회원가입하기",
@@ -179,7 +146,6 @@ class LoginActivity : ComponentActivity() {
                     },
                 textAlign = TextAlign.Center,
                 fontSize = 15.sp,
-
                 style = TextStyle(textDecoration = TextDecoration.Underline, color = Color.Gray)
             )
 
