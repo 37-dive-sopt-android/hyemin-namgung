@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import com.sopt.dive.ui.components.CommonButton
 import com.sopt.dive.ui.components.CommonInputField
 import com.sopt.dive.ui.theme.DiveTheme
+import com.sopt.dive.ui.validators.InputValidators
 import com.sopt.dive.util.ErrorMessages
 
 class SignUpActivity : ComponentActivity() {
@@ -42,11 +43,6 @@ class SignUpActivity : ComponentActivity() {
         }
     }
 
-    private val birthdayRegex = Regex("^(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$")
-
-    private fun isValidBirthday(birthday: String): Boolean {
-        return birthdayRegex.matches(birthday)
-    }
 
     @Composable
     fun SignUpScreen(modifier: Modifier = Modifier) {
@@ -120,19 +116,15 @@ class SignUpActivity : ComponentActivity() {
 
             CommonButton(
                 onClick = {
-                    idError =
-                        (if (idText.length !in 6..10) ErrorMessages.ID_ERROR_MESSAGE else null)
+                    idError = (if (!InputValidators.isValidId(idText)) ErrorMessages.ID_ERROR_MESSAGE else null)
 
-                    pwError =
-                        (if (pwText.length !in 8..12) ErrorMessages.PW_ERROR_MESSAGE else null)
+                    pwError = (if (!InputValidators.isValidPw(pwText)) ErrorMessages.PW_ERROR_MESSAGE else null)
 
-                    nicknameError =
-                        (if (nicknameText.isBlank()) ErrorMessages.NICKNAME_ERROR_MESSAGE else null)
+                    nicknameError = (if (!InputValidators.isValidNickName(nicknameText)) ErrorMessages.NICKNAME_ERROR_MESSAGE else null)
 
-                    birthdayError =
-                        if (!isValidBirthday(birthdayInt)) ErrorMessages.BIRTHDAY_ERROR_MESSAGE else null
+                    birthdayError = if (!InputValidators.isValidBirthday(birthdayInt)) ErrorMessages.BIRTHDAY_ERROR_MESSAGE else null
 
-                    if (idError == null && pwError == null && nicknameError == null && birthdayError == null) {
+                    if (listOf(idError, pwError, nicknameError, birthdayError).all { it == null }) {
                         Toast.makeText(context, "회원가입이 성공적으로 이루어졌습니다.", Toast.LENGTH_SHORT).show()
                         val resultIntent = Intent().apply {
                             putExtra("id", idText)

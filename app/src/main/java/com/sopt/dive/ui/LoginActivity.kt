@@ -134,7 +134,8 @@ class LoginActivity : ComponentActivity() {
                         Toast.makeText(context, "아이디 또는 비밀번호가 올바르지 않습니다.", Toast.LENGTH_SHORT)
                             .show()
                     }
-                }, textMessage = "Welcome To Sopt")
+                }, textMessage = "Welcome To Sopt"
+            )
 
             Text(
                 text = "회원가입하기",
