@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.ImeOptions
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -33,8 +34,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 import androidx.compose.ui.unit.sp
+import com.sopt.dive.ui.components.CommonButton
+import com.sopt.dive.ui.components.CommonText
 import com.sopt.dive.ui.components.CommonTextField
 import com.sopt.dive.ui.theme.DiveTheme
+import com.sopt.dive.util.ErrorMessages
 
 class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,125 +84,61 @@ class SignUpActivity : ComponentActivity() {
 
             Spacer(modifier = Modifier.weight(1f))
 
-            Text(text = "ID")
-//            CommonTextField (placeMessage = "아이디를 입력해주세요", keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next))
 
-
-            TextField(
+            CommonTextField(
+                text = "id",
                 value = idText,
-                onValueChange = { idText = it },
-                Modifier
-                    .fillMaxWidth()
-                    .background(color = Color.Transparent),
-                placeholder = { Text("아이디를 입력해주세요") },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White, unfocusedContainerColor = Color.Transparent
-                ),
+                placeMessage = "아이디를 입력해주세요",
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
                 ),
-                isError = idError != null,
-                supportingText = {
-                    if (idError != null) {
-                        Text(
-                            text = idError!!, fontSize = 12.sp
-                        )
-                    }
-                },
-                singleLine = true
-            )
+                onValueChange = { idText = it })
 
-            Spacer(modifier = Modifier.weight(1f))
 
-            Text(text = "PW")
-            TextField(
-                value = pwText,
-                onValueChange = { pwText = it },
-                Modifier
-                    .fillMaxWidth()
-                    .background(color = Color.Transparent),
-                placeholder = { Text("비밀번호를 입력해주세요") },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White, unfocusedContainerColor = Color.Transparent
-                ),
-                keyboardOptions = KeyboardOptions(
+
+            CommonTextField(
+                text = "pw", value = pwText, "비밀번호를 입력해주세요", keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next, keyboardType = KeyboardType.Password
-                ),
-                singleLine = true,
-                visualTransformation = PasswordVisualTransformation(),
-                isError = pwError != null,
-                supportingText = {
-                    if (pwError != null) {
-                        Text(
-                            text = pwError!!, fontSize = 12.sp
-                        )
-                    }
-                },
-            )
+                ), onValueChange = { pwText = it })
 
-            Spacer(modifier = Modifier.weight(1f))
 
-            Text(text = "NICKNAME")
-            TextField(
+
+            CommonTextField(
+                text = "nickname",
                 value = nicknameText,
-                onValueChange = { nicknameText = it },
-                Modifier
-                    .fillMaxWidth()
-                    .background(color = Color.Transparent),
-                placeholder = { Text("닉네임을 입력해주세요") },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White, unfocusedContainerColor = Color.Transparent
-                ),
-                singleLine = true,
+                placeMessage = "닉네임을 입력해주세요",
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
                 ),
-                isError = nicknameError != null,
-                supportingText = {
-                    if (nicknameError != null) {
-                        Text(
-                            text = nicknameError!!, fontSize = 12.sp
-                        )
-                    }
-                },
-            )
-            Spacer(modifier = Modifier.weight(1f))
+                onValueChange = { nicknameText = it })
 
-            Text(text = "BIRTHDAY")
-            TextField(
+
+
+            CommonTextField(
+                text = "birthday",
                 value = birthdayInt,
-                onValueChange = { birthdayInt = it },
-                Modifier
-                    .fillMaxWidth()
-                    .background(color = Color.Transparent),
-                placeholder = { Text("생일 4자리를  입력해주세요") },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White, unfocusedContainerColor = Color.Transparent
-                ),
-                singleLine = true,
+                placeMessage = "닉네임을 입력해주세요",
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
                 ),
-                isError = birthdayError != null,
-                supportingText = {
-                    if (birthdayError != null) {
-                        Text(
-                            text = birthdayError!!, fontSize = 12.sp
-                        )
-                    }
-                })
+                onValueChange = { birthdayInt = it })
+            
 
             Spacer(modifier = Modifier.weight(1f))
 
-            Button(
+            CommonButton(
                 onClick = {
-                    idError = (if (idText.length !in 6..10) "ID는 6~10글자 사이여야 합니다. " else null)
+                    idError =
+                        (if (idText.length !in 6..10) ErrorMessages.ID_ERROR_MESSAGE else null)
 
-                    pwError = (if (pwText.length !in 8..12) "비밀번호는 8 ~12 글자 사이여야 합니다. " else null)
+                    pwError =
+                        (if (pwText.length !in 8..12) ErrorMessages.PW_ERROR_MESSAGE else null)
 
-                    nicknameError = (if (nicknameText.isBlank()) "닉네임을 입력해주세요" else null)
+                    nicknameError =
+                        (if (nicknameText.isBlank()) ErrorMessages.NICKNAME_ERROR_MESSAGE else null)
 
-                    birthdayError = if (!isValidBirthday(birthdayInt)) "생일 형식으로 입력해주세요." else null
+                    birthdayError =
+                        if (!isValidBirthday(birthdayInt)) ErrorMessages.BIRTHDAY_ERROR_MESSAGE else null
 
                     if (idError == null && pwError == null && nicknameError == null && birthdayError == null) {
                         Toast.makeText(context, "회원가입이 성공적으로 이루어졌습니다.", Toast.LENGTH_SHORT).show()
@@ -213,9 +153,9 @@ class SignUpActivity : ComponentActivity() {
                     } else {
                         Toast.makeText(context, "모든 정보를 입력해주세요", Toast.LENGTH_SHORT).show()
                     }
-                }, Modifier.fillMaxWidth()
+                }, textMessage = "회원가입하기"
+            )
 
-            ) { Text("회원가입하기") }
         }
 
     }
