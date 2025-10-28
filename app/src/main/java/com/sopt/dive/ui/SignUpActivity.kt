@@ -6,37 +6,29 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.ImeOptions
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.ui.components.CommonButton
-import com.sopt.dive.ui.components.CommonText
-import com.sopt.dive.ui.components.CommonTextField
+import com.sopt.dive.ui.components.CommonInputField
 import com.sopt.dive.ui.theme.DiveTheme
 import com.sopt.dive.util.ErrorMessages
 
@@ -85,7 +77,7 @@ class SignUpActivity : ComponentActivity() {
             Spacer(modifier = Modifier.weight(1f))
 
 
-            CommonTextField(
+            CommonInputField(
                 text = "id",
                 value = idText,
                 placeMessage = "아이디를 입력해주세요",
@@ -96,14 +88,14 @@ class SignUpActivity : ComponentActivity() {
 
 
 
-            CommonTextField(
+            CommonInputField(
                 text = "pw", value = pwText, "비밀번호를 입력해주세요", keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next, keyboardType = KeyboardType.Password
                 ), onValueChange = { pwText = it })
 
 
 
-            CommonTextField(
+            CommonInputField(
                 text = "nickname",
                 value = nicknameText,
                 placeMessage = "닉네임을 입력해주세요",
@@ -114,7 +106,7 @@ class SignUpActivity : ComponentActivity() {
 
 
 
-            CommonTextField(
+            CommonInputField(
                 text = "birthday",
                 value = birthdayInt,
                 placeMessage = "닉네임을 입력해주세요",
@@ -122,7 +114,7 @@ class SignUpActivity : ComponentActivity() {
                     keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
                 ),
                 onValueChange = { birthdayInt = it })
-            
+
 
             Spacer(modifier = Modifier.weight(1f))
 

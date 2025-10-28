@@ -98,6 +98,8 @@ class LoginActivity : ComponentActivity() {
             )
             Color.Transparent
             Spacer(modifier = Modifier.padding(vertical = 20.dp))
+
+
             Text(
                 text = "ID", fontSize = 30.sp
             )
