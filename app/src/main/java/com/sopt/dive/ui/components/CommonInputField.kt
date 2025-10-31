@@ -18,25 +18,27 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun CommonInputField(
-    text: String,
+    titleText: String,
     value: String,
+    onValueChange: (String) -> Unit,
     placeMessage: String,
     keyboardOptions: KeyboardOptions,
     visualTransformation: VisualTransformation? = null,
-    errorMessage: String? = null,
-    onValueChange: (String) -> Unit
-) {
+    errorMessage: String? = null
+
+    ) {
 
     Column() {
 
-        Text(text.uppercase().toString(), modifier = Modifier.fillMaxWidth())
+        Text(titleText.uppercase().toString(), modifier = Modifier.fillMaxWidth())
 
         TextField(
             value = value,
             onValueChange = { onValueChange(it) },
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = Color.Transparent).padding(bottom = 40.dp),
+                .background(color = Color.Transparent)
+                .padding(bottom = 40.dp),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.White, unfocusedContainerColor = Color.Transparent
             ),
@@ -49,7 +51,7 @@ fun CommonInputField(
                 }
             },
             placeholder = { Text(placeMessage) },
-            singleLine = true, // 여기서 키보드 타입은 pw만 쓰이는데 imeAction만 따로 받는게 나은건지 아니면 같이 받는게 나은지
+            singleLine = true,
             keyboardOptions = keyboardOptions,
             visualTransformation = visualTransformation ?: VisualTransformation.None
 
