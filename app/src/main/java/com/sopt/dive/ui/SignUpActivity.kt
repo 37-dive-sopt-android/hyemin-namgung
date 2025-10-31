@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 import androidx.compose.ui.unit.sp
+import com.sopt.dive.model.User
 import com.sopt.dive.ui.components.CommonButton
 import com.sopt.dive.ui.components.CommonInputField
 import com.sopt.dive.ui.theme.DiveTheme
@@ -72,9 +73,8 @@ class SignUpActivity : ComponentActivity() {
 
             Spacer(modifier = Modifier.weight(1f))
 
-
             CommonInputField(
-                text = "id",
+                titleText = "id",
                 value = idText,
                 placeMessage = "아이디를 입력해주세요",
                 keyboardOptions = KeyboardOptions(
@@ -82,28 +82,21 @@ class SignUpActivity : ComponentActivity() {
                 ),
                 onValueChange = { idText = it })
 
-
-
             CommonInputField(
-                text = "pw", value = pwText, "비밀번호를 입력해주세요", keyboardOptions = KeyboardOptions(
+                titleText = "pw", value = pwText, onValueChange = { pwText = it },"비밀번호를 입력해주세요",  keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next, keyboardType = KeyboardType.Password
-                ), onValueChange = { pwText = it })
-
-
+                ))
 
             CommonInputField(
-                text = "nickname",
-                value = nicknameText,
+                titleText = "nickname", value = nicknameText,
+                onValueChange = { nicknameText = it },
                 placeMessage = "닉네임을 입력해주세요",
                 keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next
-                ),
-                onValueChange = { nicknameText = it })
-
-
+                    imeAction = ImeAction.Next)
+                )
 
             CommonInputField(
-                text = "birthday",
+                titleText = "birthday",
                 value = birthdayInt,
                 placeMessage = "닉네임을 입력해주세요",
                 keyboardOptions = KeyboardOptions(
@@ -111,28 +104,36 @@ class SignUpActivity : ComponentActivity() {
                 ),
                 onValueChange = { birthdayInt = it })
 
-
             Spacer(modifier = Modifier.weight(1f))
 
             CommonButton(
                 onClick = {
-                    idError = (if (!InputValidators.isValidId(idText)) ErrorMessages.ID_ERROR_MESSAGE else null)
+                    idError =
+                        (if (!InputValidators.isValidId(idText)) ErrorMessages.ID_ERROR_MESSAGE else null)
 
-                    pwError = (if (!InputValidators.isValidPw(pwText)) ErrorMessages.PW_ERROR_MESSAGE else null)
+                    pwError =
+                        (if (!InputValidators.isValidPw(pwText)) ErrorMessages.PW_ERROR_MESSAGE else null)
 
-                    nicknameError = (if (!InputValidators.isValidNickName(nicknameText)) ErrorMessages.NICKNAME_ERROR_MESSAGE else null)
+                    nicknameError =
+                        (if (!InputValidators.isValidNickName(nicknameText)) ErrorMessages.NICKNAME_ERROR_MESSAGE else null)
 
-                    birthdayError = if (!InputValidators.isValidBirthday(birthdayInt)) ErrorMessages.BIRTHDAY_ERROR_MESSAGE else null
+                    birthdayError =
+                        if (!InputValidators.isValidBirthday(birthdayInt)) ErrorMessages.BIRTHDAY_ERROR_MESSAGE else null
 
                     if (listOf(idError, pwError, nicknameError, birthdayError).all { it == null }) {
-                        Toast.makeText(context, "회원가입이 성공적으로 이루어졌습니다.", Toast.LENGTH_SHORT).show()
+                        val user = User(
+                            id = idText,
+                            pw = pwText,
+                            nickname = nicknameText,
+                            birthday = birthdayInt
+                        )
+
                         val resultIntent = Intent().apply {
-                            putExtra("id", idText)
-                            putExtra("pw", pwText)
-                            putExtra("nickname", nicknameText)
-                            putExtra("birthday", birthdayInt)
+                            putExtra("user", user)
                         }
+
                         setResult(Activity.RESULT_OK, resultIntent)
+                        Toast.makeText(context, "회원가입이 완료되었습니다!", Toast.LENGTH_SHORT).show()
                         finish()
                     } else {
                         Toast.makeText(context, "모든 정보를 입력해주세요", Toast.LENGTH_SHORT).show()

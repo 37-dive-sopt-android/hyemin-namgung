@@ -31,6 +31,7 @@ import com.sopt.dive.MainActivity
 
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -40,9 +41,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import com.sopt.dive.model.User
 import com.sopt.dive.ui.components.CommonButton
 import com.sopt.dive.ui.components.CommonInputField
-
 import com.sopt.dive.ui.theme.DiveTheme
-import com.sopt.dive.util.IntentKeys
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,11 +60,7 @@ class LoginActivity : ComponentActivity() {
     fun LoginScreen(modifier: Modifier = Modifier) {
         val context = LocalContext.current
 
-        var signupId by remember { mutableStateOf("") }
-        var signupPw by remember { mutableStateOf("") }
-        var signupNickname by remember { mutableStateOf("") }
-        var signupBirthday by remember { mutableStateOf("") }
-        var userData by remember { mutableStateOf<User?>(null) }
+         var userData by remember { mutableStateOf<User?>(null) }
 
         var idText by remember { mutableStateOf("") }
         var pwText by remember { mutableStateOf("") }
@@ -96,7 +91,6 @@ class LoginActivity : ComponentActivity() {
                 fontSize = 30.sp
             )
 
-            // "CommonInputField 나중에 적절한 순서로 바꾸기 ")
             CommonInputField(
                 titleText = "id", value = idText,
                 placeMessage = "아이디를 입력해주세요",
@@ -106,9 +100,7 @@ class LoginActivity : ComponentActivity() {
                 onValueChange = { idText = it }
             )
 
-
-
-            CommonInputField(
+  CommonInputField(
                 titleText = "pw", value = pwText,
                 placeMessage = "아이디를 입력해주세요",
                 keyboardOptions = KeyboardOptions(
@@ -116,7 +108,7 @@ class LoginActivity : ComponentActivity() {
                 ),
                 onValueChange = { pwText = it }
             )
-
+            Spacer(modifier = Modifier.weight(1f))
             CommonButton(
                 onClick = {
                     val user = userData
@@ -128,22 +120,6 @@ class LoginActivity : ComponentActivity() {
                             putExtra("user", user)
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         })
-                    }
-                    if (idText == signupId && pwText == signupPw && idText.isNotBlank()) {
-                        Toast.makeText(context, "로그인에 성공했습니다", Toast.LENGTH_SHORT).show()
-                        context.startActivity(
-                            Intent(context, MainActivity::class.java).apply {
-                                putExtra(IntentKeys.ID, signupId)
-                                putExtra(IntentKeys.PW, signupPw)
-                                putExtra(IntentKeys.NICKNAME, signupNickname)
-                                putExtra(IntentKeys.BIRTHDAY, signupBirthday)
-
-                                flags =
-                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            })
-                    } else {
-                        Toast.makeText(context, "아이디 또는 비밀번호가 올바르지 않습니다.", Toast.LENGTH_SHORT)
-                            .show()
                     }
                 }, textMessage = "Welcome To Sopt"
             )
