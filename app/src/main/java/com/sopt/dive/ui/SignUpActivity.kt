@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -85,10 +86,11 @@ class SignUpActivity : ComponentActivity() {
                 titleText = "pw",
                 value = pwText,
                 onValueChange = { pwText = it },
-                "비밀번호를 입력해주세요",
+                placeMessage = "비밀번호를 입력해주세요",
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next, keyboardType = KeyboardType.Password
-                )
+                ),
+                visualTransformation = PasswordVisualTransformation()
             )
 
             CommonInputField(
@@ -103,7 +105,7 @@ class SignUpActivity : ComponentActivity() {
             CommonInputField(
                 titleText = "birthday",
                 value = birthdayInt,
-                placeMessage = "닉네임을 입력해주세요",
+                placeMessage = "생일을 입력해주세요",
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
                 ),

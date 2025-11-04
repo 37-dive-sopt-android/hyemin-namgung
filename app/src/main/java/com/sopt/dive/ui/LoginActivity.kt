@@ -38,6 +38,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import com.sopt.dive.model.User
 import com.sopt.dive.ui.components.CommonButton
 import com.sopt.dive.ui.components.CommonInputField
@@ -60,7 +61,7 @@ class LoginActivity : ComponentActivity() {
     fun LoginScreen(modifier: Modifier = Modifier) {
         val context = LocalContext.current
 
-         var userData by remember { mutableStateOf<User?>(null) }
+        var userData by remember { mutableStateOf<User?>(null) }
 
         var idText by remember { mutableStateOf("") }
         var pwText by remember { mutableStateOf("") }
@@ -93,23 +94,24 @@ class LoginActivity : ComponentActivity() {
 
             CommonInputField(
                 titleText = "id", value = idText,
+                onValueChange = { idText = it },
                 placeMessage = "아이디를 입력해주세요",
                 keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next
-                ),
-                onValueChange = { idText = it },
-                modifier = Modifier
-            )
+                    imeAction = ImeAction.Next),
+                )
 
-  CommonInputField(
+            CommonInputField(
                 titleText = "pw", value = pwText,
-                placeMessage = "아이디를 입력해주세요",
+                onValueChange = { pwText = it },
+                placeMessage = "비밀번호를 입력해주세요",
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next, keyboardType = KeyboardType.Password
                 ),
-                onValueChange = { pwText = it }
+                visualTransformation = PasswordVisualTransformation()
             )
+
             Spacer(modifier = Modifier.weight(1f))
+
             CommonButton(
                 onClick = {
                     val user = userData
