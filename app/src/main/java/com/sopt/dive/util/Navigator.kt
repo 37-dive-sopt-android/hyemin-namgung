@@ -1,5 +1,6 @@
 package com.sopt.dive.util
 
+import android.provider.ContactsContract.Profile
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -17,20 +18,24 @@ import com.sopt.dive.ui.screens.HomeScreen
 import com.sopt.dive.ui.screens.ProfileScreen
 import com.sopt.dive.ui.screens.SettingsScreen
 import com.sopt.dive.model.User
+import com.sopt.dive.util.Route.Home
+import com.sopt.dive.util.Route.Profile
+import com.sopt.dive.util.Route.Settings
 
 sealed class BottomNavItem(
-    val route: Any,
+    val route: Route,
     val label: String,
     val icon: ImageVector
 ) {
-    data object SettingsItem : BottomNavItem(Settings, "Settings", Icons.Default.Settings)
+    data object SettingsItem :
+        BottomNavItem(route = Settings, label = "Settings", icon = Icons.Default.Settings)
 
-    data object HomeItem : BottomNavItem(Home, "Home", Icons.Default.Home)
-    data object ProfileItem : BottomNavItem(Profile, "Profile", Icons.Default.Person)
+    data object HomeItem :
+        BottomNavItem(route = Home, label = "Home", icon = Icons.Default.Home)
 
-
+    data object ProfileItem :
+        BottomNavItem(route = Profile, label = "Profile", icon = Icons.Default.Person)
 }
-
 
 @Composable
 fun Navigator(user: User) {
@@ -50,8 +55,14 @@ fun Navigator(user: User) {
                     navController.currentBackStackEntryAsState().value?.destination?.route
                 items.forEach { item ->
                     NavigationBarItem(
-                        selected = currentRoute == item.route::class.qualifiedName,
-                        onClick = { navController.navigate(item.route) },
+                        selected = currentRoute == item.route.name::class.qualifiedName,
+                        onClick = {
+                            navController.navigate(item.route.name) {
+                                popUpTo(navController.graph.startDestinationId) { saveState = true }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        },
                         icon = { Icon(item.icon, contentDescription = item.label) },
                         label = { Text(item.label) }
                     )
@@ -61,11 +72,11 @@ fun Navigator(user: User) {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Home
+            startDestination = Home.name
         ) {
-            composable<Settings> { SettingsScreen(innerPadding) }
-            composable<Home> { HomeScreen(innerPadding) }
-            composable<Profile> { ProfileScreen(innerPadding, user) }
+            composable(Settings.name) { SettingsScreen(innerPadding) }
+            composable(Home.name) { HomeScreen(innerPadding) }
+            composable(Profile.name) { ProfileScreen(innerPadding, user) }
 
         }
 

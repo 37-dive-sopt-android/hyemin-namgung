@@ -28,12 +28,12 @@ fun ProfileScreen(paddingValues: PaddingValues, user: User) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(" Profile", fontSize = 28.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
+        Text(text= " Profile", fontSize = 28.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
         Spacer(modifier = Modifier.height(20.dp))
-        Text("ID: ${user.id}", fontSize = 20.sp)
-        Text("PW: ${user.pw}", fontSize = 20.sp)
-        Text("Nickname: ${user.nickname}", fontSize = 20.sp)
-        Text("Birthday: ${user.birthday}", fontSize = 20.sp)
+        Text(text= "ID: ${user.id}", fontSize = 20.sp)
+        Text(text= "PW: ${user.pw}", fontSize = 20.sp)
+        Text(text= "Nickname: ${user.nickname}", fontSize = 20.sp)
+        Text(text= "Birthday: ${user.birthday}", fontSize = 20.sp)
         Spacer(modifier = Modifier.height(40.dp))
         Button(onClick = {
             val intent = Intent(context, LoginActivity::class.java)

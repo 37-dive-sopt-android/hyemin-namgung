@@ -30,6 +30,6 @@ fun HomeScreen(paddingValues: PaddingValues) {
 
 @Preview
 @Composable
-fun HomeScre(){
+private fun HomeScreenPreview(){
     HomeScreen(paddingValues = PaddingValues())
 }

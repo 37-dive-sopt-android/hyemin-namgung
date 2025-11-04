@@ -33,18 +33,19 @@ fun SettingsScreen(paddingValues: PaddingValues) {
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+
         Text(
             text = "설정",
             style = MaterialTheme.typography.headlineSmall
         )
-
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("알림 받기")
+            Text(text = "알림 받기")
+
             Switch(
                 checked = isNotification,
                 onCheckedChange = {
@@ -57,7 +58,6 @@ fun SettingsScreen(paddingValues: PaddingValues) {
                 }
             )
         }
-
 
 
         Button(

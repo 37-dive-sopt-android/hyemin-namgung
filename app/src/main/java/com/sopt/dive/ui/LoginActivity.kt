@@ -97,7 +97,8 @@ class LoginActivity : ComponentActivity() {
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
                 ),
-                onValueChange = { idText = it }
+                onValueChange = { idText = it },
+                modifier = Modifier
             )
 
   CommonInputField(

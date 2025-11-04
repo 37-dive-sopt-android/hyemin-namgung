@@ -78,5 +78,5 @@ fun UserProfileInfo(user: UserInfo, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun InputPreview() {
-    UserProfileInfo(UserInfo("gey", "ddd", "gkdl dkssud qldhk duddnjsgl"))
+    UserProfileInfo(UserInfo(userName = "gey", title =  "ddd", content =  "gkdl dkssud qldhk duddnjsgl"))
 }

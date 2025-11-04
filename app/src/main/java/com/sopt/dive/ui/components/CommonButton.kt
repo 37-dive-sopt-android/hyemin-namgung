@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun CommonButton(textMessage: String, onClick: () -> Unit) {
+fun CommonButton(textMessage: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Button(onClick = onClick, Modifier.fillMaxWidth()) {
         Text(textMessage)
     }

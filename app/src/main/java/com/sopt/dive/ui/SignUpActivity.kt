@@ -25,7 +25,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.model.User
 import com.sopt.dive.ui.components.CommonButton
@@ -83,17 +82,23 @@ class SignUpActivity : ComponentActivity() {
                 onValueChange = { idText = it })
 
             CommonInputField(
-                titleText = "pw", value = pwText, onValueChange = { pwText = it },"비밀번호를 입력해주세요",  keyboardOptions = KeyboardOptions(
+                titleText = "pw",
+                value = pwText,
+                onValueChange = { pwText = it },
+                "비밀번호를 입력해주세요",
+                keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next, keyboardType = KeyboardType.Password
-                ))
+                )
+            )
 
             CommonInputField(
                 titleText = "nickname", value = nicknameText,
                 onValueChange = { nicknameText = it },
                 placeMessage = "닉네임을 입력해주세요",
                 keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next)
+                    imeAction = ImeAction.Next
                 )
+            )
 
             CommonInputField(
                 titleText = "birthday",
@@ -138,7 +143,8 @@ class SignUpActivity : ComponentActivity() {
                     } else {
                         Toast.makeText(context, "모든 정보를 입력해주세요", Toast.LENGTH_SHORT).show()
                     }
-                }, textMessage = "회원가입하기"
+                },
+                textMessage = "회원가입하기"
             )
 
         }

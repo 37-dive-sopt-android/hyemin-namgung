@@ -24,11 +24,12 @@ fun CommonInputField(
     placeMessage: String,
     keyboardOptions: KeyboardOptions,
     visualTransformation: VisualTransformation? = null,
-    errorMessage: String? = null
+    errorMessage: String? = null,
+    modifier: Modifier = Modifier
 
     ) {
 
-    Column() {
+    Column(modifier = modifier) {
 
         Text(titleText.uppercase().toString(), modifier = Modifier.fillMaxWidth())
 
