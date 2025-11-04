@@ -79,8 +79,8 @@ class LoginActivity : ComponentActivity() {
             modifier = modifier
                 .fillMaxSize()
                 .padding(20.dp)
-                .imePadding()
                 .verticalScroll(rememberScrollState())
+                .imePadding()
         ) {
             Text(
                 text = "Welcome To SOPT",
@@ -107,7 +107,7 @@ class LoginActivity : ComponentActivity() {
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next, keyboardType = KeyboardType.Password
                 ),
-                visualTransformation = PasswordVisualTransformation()
+                visualTransformation = PasswordVisualTransformation(),
             )
 
             Spacer(modifier = Modifier.weight(1f))
@@ -117,12 +117,16 @@ class LoginActivity : ComponentActivity() {
                     val user = userData
                     if (user == null) {
                         Toast.makeText(context, "회원가입 후 로그인해주세요.", Toast.LENGTH_SHORT).show()
-                    } else if (idText == user.id && pwText == user.pw) {
+                    }
+                    if (idText == user?.id && pwText == user.pw) {
                         Toast.makeText(context, "로그인 성공!", Toast.LENGTH_SHORT).show()
                         context.startActivity(Intent(context, MainActivity::class.java).apply {
                             putExtra("user", user)
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         })
+                    }
+                    else {
+                        Toast.makeText(context,"아이디 또는 비밀번호가 틀렸습니다. ", Toast.LENGTH_SHORT).show()
                     }
                 }, textMessage = "Welcome To Sopt"
             )

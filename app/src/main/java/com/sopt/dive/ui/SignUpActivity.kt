@@ -9,8 +9,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -62,6 +65,8 @@ class SignUpActivity : ComponentActivity() {
             modifier = modifier
                 .fillMaxWidth()
                 .padding(20.dp)
+                .verticalScroll(rememberScrollState())
+                .imePadding()
         ) {
             Text(
                 text = "SIGN UP",
@@ -80,7 +85,8 @@ class SignUpActivity : ComponentActivity() {
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
                 ),
-                onValueChange = { idText = it })
+                onValueChange = { idText = it },
+                errorMessage = idError)
 
             CommonInputField(
                 titleText = "pw",
@@ -90,7 +96,8 @@ class SignUpActivity : ComponentActivity() {
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next, keyboardType = KeyboardType.Password
                 ),
-                visualTransformation = PasswordVisualTransformation()
+                visualTransformation = PasswordVisualTransformation(),
+                errorMessage = pwError
             )
 
             CommonInputField(
@@ -99,7 +106,8 @@ class SignUpActivity : ComponentActivity() {
                 placeMessage = "닉네임을 입력해주세요",
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
-                )
+                ),
+                errorMessage = nicknameError
             )
 
             CommonInputField(
@@ -109,7 +117,8 @@ class SignUpActivity : ComponentActivity() {
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
                 ),
-                onValueChange = { birthdayInt = it })
+                onValueChange = { birthdayInt = it },
+                errorMessage = birthdayError)
 
             Spacer(modifier = Modifier.weight(1f))
 
@@ -128,22 +137,13 @@ class SignUpActivity : ComponentActivity() {
                         if (!InputValidators.isValidBirthday(birthdayInt)) ErrorMessages.BIRTHDAY_ERROR_MESSAGE else null
 
                     if (listOf(idError, pwError, nicknameError, birthdayError).all { it == null }) {
-                        val user = User(
-                            id = idText,
-                            pw = pwText,
-                            nickname = nicknameText,
-                            birthday = birthdayInt
-                        )
+                        val user = User(id = idText, pw = pwText, nickname = nicknameText, birthday = birthdayInt)
 
-                        val resultIntent = Intent().apply {
-                            putExtra("user", user)
-                        }
+                        val resultIntent = Intent().apply { putExtra("user", user) }
 
                         setResult(Activity.RESULT_OK, resultIntent)
                         Toast.makeText(context, "회원가입이 완료되었습니다!", Toast.LENGTH_SHORT).show()
                         finish()
-                    } else {
-                        Toast.makeText(context, "모든 정보를 입력해주세요", Toast.LENGTH_SHORT).show()
                     }
                 },
                 textMessage = "회원가입하기"
