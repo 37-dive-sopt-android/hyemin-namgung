@@ -1,8 +1,9 @@
 package com.sopt.dive.util
 
 
-
-enum class Route{
+enum class Route {
+    Login,
+    SignUp,
     Home,
     Profile,
     Settings

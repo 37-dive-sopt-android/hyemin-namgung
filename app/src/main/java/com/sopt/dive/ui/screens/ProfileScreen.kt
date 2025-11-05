@@ -1,6 +1,5 @@
 package com.sopt.dive.ui.screens
 
-import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
@@ -14,7 +13,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.model.User
-import com.sopt.dive.ui.LoginActivity
 
 @Composable
 fun ProfileScreen(paddingValues: PaddingValues, user: User) {
@@ -36,9 +34,7 @@ fun ProfileScreen(paddingValues: PaddingValues, user: User) {
         Text(text= "Birthday: ${user.birthday}", fontSize = 20.sp)
         Spacer(modifier = Modifier.height(40.dp))
         Button(onClick = {
-            val intent = Intent(context, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            context.startActivity(intent)
+
         }) {
             Text("로그아웃")
         }
