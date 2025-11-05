@@ -9,17 +9,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.dive.ui.components.UserProfileInfo
-
-import com.sopt.dive.util.userProfileList
+import com.sopt.dive.viewmodel.MainViewModel
 
 
 @Composable
 fun HomeScreen(paddingValues: PaddingValues) {
-
+    val viewModel : MainViewModel = viewModel()
     LazyColumn(modifier = Modifier.fillMaxSize().padding(10.dp)){
         itemsIndexed(
-            items = userProfileList
+            items = viewModel.userProfileList
         ) {index, user ->
             UserProfileInfo(user= user, modifier = Modifier)
         }
