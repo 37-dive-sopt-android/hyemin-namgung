@@ -1,17 +1,11 @@
+package com.sopt.dive.ui.screens
+
 import android.widget.Toast
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -24,22 +18,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sopt.dive.model.User
+import com.sopt.dive.viewmodel.MainViewModel
 import com.sopt.dive.ui.components.CommonButton
 import com.sopt.dive.ui.components.CommonInputField
-import com.sopt.dive.ui.validators.InputValidators
-import com.sopt.dive.util.ErrorMessages
+
 
 @Composable
 fun LoginScreen(
-    userData: User?,
-    onLoginSuccess: (User) -> Unit,
+    mainViewModel: MainViewModel,
+    onLoginSuccess: (String, String) -> Unit,
     onSignUpClick: () -> Unit
 ) {
     val context = LocalContext.current
+
     var idText by remember { mutableStateOf("") }
     var pwText by remember { mutableStateOf("") }
-    var errorMessage = ""
 
     Column(
         modifier = Modifier
@@ -58,11 +51,8 @@ fun LoginScreen(
             titleText = "id",
             value = idText,
             onValueChange = { idText = it },
-            placeMessage = "아이디를 입력해주세요"      ,
-            keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next,
-            keyboardType = KeyboardType.Text
-        ),
+            placeMessage = "아이디를 입력해주세요",
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next, keyboardType = KeyboardType.Text)
         )
 
         CommonInputField(
@@ -70,23 +60,18 @@ fun LoginScreen(
             value = pwText,
             onValueChange = { pwText = it },
             placeMessage = "비밀번호를 입력해주세요",
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Next,
-                keyboardType = KeyboardType.Password
-            ),
-            visualTransformation = PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done, keyboardType = KeyboardType.Password),
+            visualTransformation = PasswordVisualTransformation()
         )
 
         Spacer(modifier = Modifier.weight(1f))
 
         CommonButton(
             onClick = {
-                val user = userData
-                if (user == null) {
-                    Toast.makeText(context, "회원가입 후 로그인해주세요.", Toast.LENGTH_SHORT).show()
-                } else if (idText == user.id && pwText == user.pw) {
-                    Toast.makeText(context, "로그인 성공!", Toast.LENGTH_SHORT).show()
-                    onLoginSuccess(user)
+                if (mainViewModel.loginUser(idText, pwText)) {
+                    onLoginSuccess(idText, pwText)
+                } else {
+                    Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
                 }
             },
             textMessage = "로그인"
@@ -100,10 +85,7 @@ fun LoginScreen(
                 .clickable { onSignUpClick() },
             textAlign = TextAlign.Center,
             fontSize = 15.sp,
-            style = TextStyle(
-                textDecoration = TextDecoration.Underline,
-                color = Color.Gray
-            )
+            style = TextStyle(textDecoration = TextDecoration.Underline, color = Color.Gray)
         )
     }
 }

@@ -16,12 +16,14 @@ import com.sopt.dive.viewmodel.MainViewModel
 
 @Composable
 fun HomeScreen(paddingValues: PaddingValues) {
-    val viewModel : MainViewModel = viewModel()
-    LazyColumn(modifier = Modifier.fillMaxSize().padding(10.dp)){
+    val viewModel: MainViewModel = viewModel()
+    LazyColumn(modifier = Modifier
+        .fillMaxSize()
+        .padding(10.dp)) {
         itemsIndexed(
             items = viewModel.userProfileList
-        ) {index, user ->
-            UserProfileInfo(user= user, modifier = Modifier)
+        ) { index, user ->
+            UserProfileInfo(user = user)
         }
 
 
@@ -30,6 +32,6 @@ fun HomeScreen(paddingValues: PaddingValues) {
 
 @Preview
 @Composable
-private fun HomeScreenPreview(){
+private fun HomeScreenPreview() {
     HomeScreen(paddingValues = PaddingValues())
 }

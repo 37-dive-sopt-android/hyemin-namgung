@@ -1,6 +1,7 @@
 package com.sopt.dive.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.sopt.dive.model.User
 
 class MainViewModel : ViewModel() {
     data class UserInfo(val userName: String, val title: String, val content: String)
@@ -24,6 +25,22 @@ class MainViewModel : ViewModel() {
 
         )
 
+        private var _currentUser: User? = null
+        val currentUser: User?
+            get() = _currentUser
+
+        fun loginUser(userName: String, password: String): Boolean {
+            return _currentUser?.let {
+                it.id == userName && it.pw == password
+            } ?: false
+        }
+
+        fun signUpUser(userName: String, password: String, nickname: String, birthday: String) {
+            _currentUser = User(userName, password, nickname, birthday)
+        }
+    }
 
 
-}
+
+
+
