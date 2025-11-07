@@ -1,6 +1,5 @@
 package com.sopt.dive.util
 
-
 import Route
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -25,7 +24,6 @@ import androidx.navigation.compose.rememberNavController
 import com.sopt.dive.model.User
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.dive.viewmodel.MainViewModel
-
 import com.sopt.dive.ui.screens.HomeScreen
 import com.sopt.dive.ui.screens.LoginScreen
 import com.sopt.dive.ui.screens.ProfileScreen

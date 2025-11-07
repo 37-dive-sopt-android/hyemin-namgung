@@ -23,8 +23,6 @@ import com.sopt.dive.ui.validators.InputValidators
 import com.sopt.dive.util.ErrorMessages
 import com.sopt.dive.viewmodel.MainViewModel
 
-
-
 @Composable
 fun SignUpScreen(
     mainViewModel: MainViewModel,
@@ -36,7 +34,6 @@ fun SignUpScreen(
     var nicknameText by remember { mutableStateOf("") }
     var birthdayInt by remember { mutableStateOf("") }
 
-    // 에러 메시지
     val idError = if (idText.isNotBlank() && !InputValidators.isValidId(idText)) {
         ErrorMessages.ID_ERROR_MESSAGE
     } else null

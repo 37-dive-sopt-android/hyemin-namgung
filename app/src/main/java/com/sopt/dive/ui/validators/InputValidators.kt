@@ -8,4 +8,3 @@ object InputValidators {
     fun isValidNickName(nickname:String): Boolean = nickname.isNotBlank()
     fun isValidBirthday(birthday: String): Boolean =  birthdayRegex.matches(birthday)
 }
-
