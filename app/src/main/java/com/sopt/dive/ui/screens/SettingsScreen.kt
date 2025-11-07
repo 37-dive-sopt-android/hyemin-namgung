@@ -40,7 +40,7 @@ enum class CardState(val imageResId: Int) {
 }
 
 @Composable
-fun SettingsScreen(paddingValues: PaddingValues) {
+fun CardScreen(paddingValues: PaddingValues) {
     val context = LocalContext.current
     var currentCardState by remember { mutableStateOf(CardState.Front) }
 
@@ -68,14 +68,16 @@ fun SettingsScreen(paddingValues: PaddingValues) {
                 .fillMaxWidth()
                 .padding(20.dp)
                 .background(
-                    color = Color.Yellow,
+                    color = Color(229 / 255f, 99 / 255f, 97 / 255f),
                     shape = MaterialTheme.shapes.medium
                 ),
             text = "오늘의 부적",
             style = MaterialTheme.typography.headlineSmall,
+
             fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
-        )
+            textAlign = TextAlign.Center,
+
+            )
 
         Card(
             modifier = Modifier
@@ -84,7 +86,8 @@ fun SettingsScreen(paddingValues: PaddingValues) {
                 .padding(20.dp)
                 .clickable {
                     currentCardState = if (currentCardState == CardState.Front) {
-                        CardState.Back                     } else {
+                        CardState.Back
+                    } else {
                         CardState.Front
                     }
                 }
@@ -108,6 +111,7 @@ fun SettingsScreen(paddingValues: PaddingValues) {
 
 @Preview
 @Composable
-private fun SettingsScreenPreview() {
-    SettingsScreen(paddingValues = PaddingValues.Zero)
+private fun CardScreenPreview() {
+    CardScreen(paddingValues = PaddingValues.Zero)
 }
+

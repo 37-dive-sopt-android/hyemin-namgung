@@ -27,7 +27,7 @@ import com.sopt.dive.viewmodel.MainViewModel
 import com.sopt.dive.ui.screens.HomeScreen
 import com.sopt.dive.ui.screens.LoginScreen
 import com.sopt.dive.ui.screens.ProfileScreen
-import com.sopt.dive.ui.screens.SettingsScreen
+import com.sopt.dive.ui.screens.CardScreen
 import com.sopt.dive.ui.screens.SignUpScreen
 
 sealed class BottomNavItem(
@@ -133,7 +133,7 @@ fun Navigator(navController: NavHostController = rememberNavController()) {
             }
 
             composable(Route.Settings.path) {
-                SettingsScreen(innerPadding)
+                CardScreen(innerPadding)
             }
         }
     }
