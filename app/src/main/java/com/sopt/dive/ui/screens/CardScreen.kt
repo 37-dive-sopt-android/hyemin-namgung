@@ -100,7 +100,7 @@ fun CardScreen(paddingValues: PaddingValues) {
         ) {
 
             Image(
-                painter = painterResource(id = currentCardState.imageResId), // 상태에 맞는 이미지 리소스 적용
+                painter = painterResource(id = currentCardState.imageResId),
                 contentDescription = "카드 이미지",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
