@@ -9,6 +9,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -33,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sopt.dive.ui.theme.MainPinkText
 
 
 enum class CardState(val imageResId: Int) {
@@ -65,7 +68,7 @@ fun CardScreen(paddingValues: PaddingValues) {
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize().padding(paddingValues)
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -74,7 +77,7 @@ fun CardScreen(paddingValues: PaddingValues) {
             modifier = Modifier
                 .fillMaxWidth(),
             text = "오늘의 부적",
-            color = Color(210 / 255f, 99 / 255f, 97 / 255f),
+            color = MainPinkText,
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
@@ -92,7 +95,7 @@ fun CardScreen(paddingValues: PaddingValues) {
             modifier = Modifier
                 .fillMaxSize()
                 .height(250.dp)
-                .padding(horizontal = 20.dp, vertical = 10.dp)
+                .padding(horizontal = 20.dp, vertical = 30.dp)
                 .clickable {
                     isFlipped = !isFlipped
                 }
@@ -119,7 +122,9 @@ fun CardScreen(paddingValues: PaddingValues) {
                     },
                 contentScale = ContentScale.Crop
             )
+
         }
+        Spacer(modifier = Modifier.height(24.dp))
     }
 }
 

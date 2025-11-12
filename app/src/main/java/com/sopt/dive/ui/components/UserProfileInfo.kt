@@ -27,6 +27,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.R
+import com.sopt.dive.ui.theme.MainPinkBackground
+import com.sopt.dive.ui.theme.SubPinkBackground
 import com.sopt.dive.viewmodel.MainViewModel.UserInfo
 
 
@@ -59,7 +61,7 @@ fun UserProfileInfo(user: UserInfo, modifier: Modifier = Modifier) {
             modifier = Modifier.size(width = 120.dp, height = 40.dp),
             contentPadding = PaddingValues(0.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (isFollowing) Color.Gray else Color.Blue,
+                containerColor = if (isFollowing) Color.Gray else SubPinkBackground,
                 contentColor = Color.White
             ),
         ) {
