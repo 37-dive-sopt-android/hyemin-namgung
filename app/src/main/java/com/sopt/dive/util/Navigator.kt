@@ -11,24 +11,24 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.lifecycle.createSavedStateHandle
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.sopt.dive.model.User
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.sopt.dive.viewmodel.MainViewModel
 import com.sopt.dive.ui.screens.HomeScreen
 import com.sopt.dive.ui.screens.LoginScreen
 import com.sopt.dive.ui.screens.ProfileScreen
 import com.sopt.dive.ui.screens.CardScreen
 import com.sopt.dive.ui.screens.SignUpScreen
+import com.sopt.dive.viewmodel.UserViewModel
 
 sealed class BottomNavItem(
     val route: Route,
@@ -52,13 +52,22 @@ sealed class BottomNavItem(
         "Settings",
         Icons.Default.Settings
     )
+
+    companion object {
+        val items = listOf(HomeItem, ProfileItem, SettingsItem)
+    }
 }
 
 @Composable
 fun Navigator(navController: NavHostController = rememberNavController()) {
-    val mainViewModel: MainViewModel = viewModel()
-    var user by remember { mutableStateOf<User?>(null) }
-
+    val userViewModel: UserViewModel = viewModel(
+        factory = viewModelFactory {
+            initializer {
+                UserViewModel(createSavedStateHandle())
+            }
+        }
+    )
+    val currentUser by userViewModel.currentUser.collectAsState()
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     val showBottomBar = currentRoute !in listOf(Route.Login.path, Route.SignUp.path)
 
@@ -66,13 +75,7 @@ fun Navigator(navController: NavHostController = rememberNavController()) {
         bottomBar = {
             if (showBottomBar) {
                 NavigationBar {
-                    val items = listOf(
-                        BottomNavItem.HomeItem,
-                        BottomNavItem.ProfileItem,
-                        BottomNavItem.SettingsItem
-                    )
-
-                    items.forEach { item ->
+                    BottomNavItem.items.forEach { item ->
                         NavigationBarItem(
                             selected = currentRoute == item.route.path, // currentRoute와 item.route.path를 비교
                             onClick = {
@@ -85,8 +88,7 @@ fun Navigator(navController: NavHostController = rememberNavController()) {
                                 }
                             },
                             icon = { Icon(item.icon, contentDescription = item.label) },
-                            label = { Text(item.label) }
-                        )
+                            label = { Text(item.label) })
                     }
                 }
             }
@@ -98,11 +100,10 @@ fun Navigator(navController: NavHostController = rememberNavController()) {
         ) {
             composable(Route.Login.path) {
                 LoginScreen(
-                    mainViewModel = mainViewModel,
+                    userViewModel = userViewModel,
                     onLoginSuccess = { userName, password ->
-                        val loggedInUser = mainViewModel.currentUser
-                        if (loggedInUser != null && loggedInUser.id == userName && loggedInUser.pw == password) {
-                            user = loggedInUser
+                        val user = userViewModel.currentUser.value
+                        if (user != null && user.id == userName && user.pw == password) {
                             navController.navigate(Route.Home.path) {
                                 popUpTo(Route.Login.path) { inclusive = true }
                                 launchSingleTop = true
@@ -117,7 +118,7 @@ fun Navigator(navController: NavHostController = rememberNavController()) {
 
             composable(Route.SignUp.path) {
                 SignUpScreen(
-                    mainViewModel = mainViewModel,
+                    userViewModel = userViewModel,
                     onSignUpComplete = { user ->
                         navController.popBackStack(Route.Login.path, inclusive = false)
                     }
@@ -129,7 +130,7 @@ fun Navigator(navController: NavHostController = rememberNavController()) {
             }
 
             composable(Route.Profile.path) {
-                user?.let { ProfileScreen(innerPadding, it) }
+                currentUser?.let { ProfileScreen(innerPadding, userViewModel) }
             }
 
             composable(Route.Settings.path) {

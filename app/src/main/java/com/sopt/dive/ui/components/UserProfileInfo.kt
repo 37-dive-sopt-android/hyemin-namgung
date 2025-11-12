@@ -27,13 +27,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.dive.R
-import com.sopt.dive.ui.theme.MainPinkBackground
+import com.sopt.dive.model.HomeProfileInfo
 import com.sopt.dive.ui.theme.SubPinkBackground
-import com.sopt.dive.viewmodel.MainViewModel.UserInfo
 
 
 @Composable
-fun UserProfileInfo(user: UserInfo, modifier: Modifier = Modifier) {
+fun UserProfileCard(user: HomeProfileInfo, modifier: Modifier = Modifier) {
     var isFollowing by remember { mutableStateOf(false) }
 
     Row(modifier = modifier
@@ -79,6 +78,6 @@ fun UserProfileInfo(user: UserInfo, modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun InputPreview() {
-    UserProfileInfo(UserInfo(userName = "gey", title =  "ddd", content =  "gkdl dkssud qldhk duddnjsgl"))
+private fun InputPreview() {
+    UserProfileCard(HomeProfileInfo(userName = "gey", title =  "ddd", content =  "gkdl dkssud qldhk duddnjsgl"))
 }

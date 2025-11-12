@@ -21,11 +21,11 @@ import com.sopt.dive.ui.components.CommonButton
 import com.sopt.dive.ui.components.CommonInputField
 import com.sopt.dive.ui.validators.InputValidators
 import com.sopt.dive.util.ErrorMessages
-import com.sopt.dive.viewmodel.MainViewModel
+import com.sopt.dive.viewmodel.UserViewModel
 
 @Composable
 fun SignUpScreen(
-    mainViewModel: MainViewModel,
+    userViewModel: UserViewModel,
     onSignUpComplete: (User) -> Unit
 ) {
     val context = LocalContext.current
@@ -42,13 +42,15 @@ fun SignUpScreen(
         ErrorMessages.PW_ERROR_MESSAGE
     } else null
 
-    val nicknameError = if (nicknameText.isNotBlank() && !InputValidators.isValidNickName(nicknameText)) {
-        ErrorMessages.NICKNAME_ERROR_MESSAGE
-    } else null
+    val nicknameError =
+        if (nicknameText.isNotBlank() && !InputValidators.isValidNickName(nicknameText)) {
+            ErrorMessages.NICKNAME_ERROR_MESSAGE
+        } else null
 
-    val birthdayError = if (birthdayInt.isNotBlank() && !InputValidators.isValidBirthday(birthdayInt)) {
-        ErrorMessages.BIRTHDAY_ERROR_MESSAGE
-    } else null
+    val birthdayError =
+        if (birthdayInt.isNotBlank() && !InputValidators.isValidBirthday(birthdayInt)) {
+            ErrorMessages.BIRTHDAY_ERROR_MESSAGE
+        } else null
 
     Column(
         modifier = Modifier
@@ -69,7 +71,10 @@ fun SignUpScreen(
             value = idText,
             onValueChange = { idText = it },
             placeMessage = "아이디를 입력해주세요",
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next, keyboardType = KeyboardType.Text),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Text
+            ),
             errorMessage = idError
         )
 
@@ -78,7 +83,10 @@ fun SignUpScreen(
             value = pwText,
             onValueChange = { pwText = it },
             placeMessage = "비밀번호를 입력해주세요",
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next, keyboardType = KeyboardType.Password),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Password
+            ),
             visualTransformation = PasswordVisualTransformation(),
             errorMessage = pwError
         )
@@ -88,7 +96,10 @@ fun SignUpScreen(
             value = nicknameText,
             onValueChange = { nicknameText = it },
             placeMessage = "닉네임을 입력해주세요",
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next, keyboardType = KeyboardType.Text),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Text
+            ),
             errorMessage = nicknameError
         )
 
@@ -97,7 +108,10 @@ fun SignUpScreen(
             value = birthdayInt,
             onValueChange = { birthdayInt = it },
             placeMessage = "생년월일을 입력해주세요",
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done, keyboardType = KeyboardType.Number),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Done,
+                keyboardType = KeyboardType.Number
+            ),
             errorMessage = birthdayError
         )
 
@@ -118,7 +132,7 @@ fun SignUpScreen(
                 ) {
                     val user = User(idText, pwText, nicknameText, birthdayInt)
 
-                    mainViewModel.signUpUser(user.id, user.pw, user.nickname, user.birthday)
+                    userViewModel.signUpUser(user.id, user.pw, user.nickname, user.birthday)
                     Toast.makeText(context, "회원가입 완료! 로그인 화면으로 돌아갑니다.", Toast.LENGTH_SHORT).show()
                     onSignUpComplete(user)
                 } else {

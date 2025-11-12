@@ -1,6 +1,5 @@
 package com.sopt.dive.ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -12,7 +11,7 @@ import com.sopt.dive.ui.theme.MainPinkBackground
 
 @Composable
 fun CommonButton(textMessage: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    Button(onClick = onClick, Modifier.fillMaxWidth(),
+    Button(onClick = onClick, modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
         containerColor = MainPinkBackground,
         contentColor = Color.White

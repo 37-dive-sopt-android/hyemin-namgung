@@ -18,14 +18,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sopt.dive.viewmodel.MainViewModel
 import com.sopt.dive.ui.components.CommonButton
 import com.sopt.dive.ui.components.CommonInputField
-
+import com.sopt.dive.viewmodel.UserViewModel
 
 @Composable
 fun LoginScreen(
-    mainViewModel: MainViewModel,
+    userViewModel: UserViewModel,
     onLoginSuccess: (String, String) -> Unit,
     onSignUpClick: () -> Unit
 ) {
@@ -68,7 +67,7 @@ fun LoginScreen(
 
         CommonButton(
             onClick = {
-                if (mainViewModel.loginUser(idText, pwText)) {
+                if (userViewModel.loginUser(idText, pwText)) {
                     onLoginSuccess(idText, pwText)
                 } else {
                     Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
@@ -82,7 +81,7 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 40.dp)
-                .clickable { onSignUpClick() },
+                .clickable (onClick =  onSignUpClick ),
             textAlign = TextAlign.Center,
             fontSize = 15.sp,
             style = TextStyle(textDecoration = TextDecoration.Underline, color = Color.Gray)

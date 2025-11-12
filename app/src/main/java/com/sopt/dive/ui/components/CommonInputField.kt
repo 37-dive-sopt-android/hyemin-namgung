@@ -29,9 +29,9 @@ fun CommonInputField(
     titleText: String,
     value: String,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
     placeMessage: String,
     keyboardOptions: KeyboardOptions,
+    modifier: Modifier = Modifier,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     errorMessage: String? = null
 ) {
