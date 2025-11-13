@@ -18,11 +18,12 @@ class UserViewModel(
     companion object {
         private const val USER = "user"
     }
+
     private var _currentUser = MutableStateFlow(savedStateHandle.get<User?>(USER))
     val currentUser: StateFlow<User?> = _currentUser.asStateFlow()
 
-    fun signUpUser(userId: String, password: String, nickname: String, birthday: String) {
-        val newUser = User(userId, password, nickname, birthday)
+    fun signUpUser(userId: String, password: String, nickname: String, email: String, age: Int) {
+        val newUser = User(userId, password, nickname, email, age)
         _currentUser.value = newUser
         savedStateHandle[USER] = newUser
     }
@@ -30,9 +31,10 @@ class UserViewModel(
     fun loginUser(userId: String, password: String): Boolean {
         val user = _currentUser.value
         val success = user?.id == userId && user.pw == password
-        if(success) savedStateHandle[USER] = user
-        return  success
+        if (success) savedStateHandle[USER] = user
+        return success
     }
+
     fun logoutUser() {
         _currentUser.value = null
         savedStateHandle[USER] = null

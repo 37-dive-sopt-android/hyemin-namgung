@@ -31,8 +31,9 @@ fun SignUpScreen(
     val context = LocalContext.current
     var idText by remember { mutableStateOf("") }
     var pwText by remember { mutableStateOf("") }
-    var nicknameText by remember { mutableStateOf("") }
-    var birthdayInt by remember { mutableStateOf("") }
+    var nameText by remember { mutableStateOf("") }
+    var emailText by remember { mutableStateOf("") }
+    var ageText by remember { mutableStateOf("") }
 
     val idError = if (idText.isNotBlank() && !InputValidators.isValidId(idText)) {
         ErrorMessages.ID_ERROR_MESSAGE
@@ -42,14 +43,19 @@ fun SignUpScreen(
         ErrorMessages.PW_ERROR_MESSAGE
     } else null
 
-    val nicknameError =
-        if (nicknameText.isNotBlank() && !InputValidators.isValidNickName(nicknameText)) {
+    val nameError =
+        if (nameText.isNotBlank() && !InputValidators.isValidNickName(nameText)) {
             ErrorMessages.NICKNAME_ERROR_MESSAGE
         } else null
 
-    val birthdayError =
-        if (birthdayInt.isNotBlank() && !InputValidators.isValidBirthday(birthdayInt)) {
-            ErrorMessages.BIRTHDAY_ERROR_MESSAGE
+    val emailError =
+        if (ageText.isNotBlank() && !InputValidators.isValidEmail(emailText)) {
+            ErrorMessages.EMAIL_ERROR_MESSAGE
+        } else null
+
+    val ageError =
+        if (ageText.isNotBlank() && !InputValidators.isValidAge(ageText)) {
+            ErrorMessages.AGE_ERROR_MESSAGE
         } else null
 
     Column(
@@ -92,27 +98,37 @@ fun SignUpScreen(
         )
 
         CommonInputField(
-            titleText = "nickname",
-            value = nicknameText,
-            onValueChange = { nicknameText = it },
-            placeMessage = "닉네임을 입력해주세요",
+            titleText = "name",
+            value = nameText,
+            onValueChange = { nameText = it },
+            placeMessage = "이름을 입력해주세요",
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next,
                 keyboardType = KeyboardType.Text
             ),
-            errorMessage = nicknameError
+            errorMessage = nameError
         )
-
         CommonInputField(
-            titleText = "birthday",
-            value = birthdayInt,
-            onValueChange = { birthdayInt = it },
-            placeMessage = "생년월일을 입력해주세요",
+            titleText = "email",
+            value = emailText,
+            onValueChange = { emailText = it },
+            placeMessage = "이메일을 입력해주세요",
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Email
+            ),
+            errorMessage = emailError
+        )
+        CommonInputField(
+            titleText = "age",
+            value = ageText,
+            onValueChange = { ageText = it },
+            placeMessage = "나이를 입력해주세요",
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Number
             ),
-            errorMessage = birthdayError
+            errorMessage = ageError
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -123,16 +139,16 @@ fun SignUpScreen(
                 if (
                     idError == null &&
                     pwError == null &&
-                    nicknameError == null &&
-                    birthdayError == null &&
+                    nameError == null &&
+                    ageError == null &&
                     idText.isNotBlank() &&
                     pwText.isNotBlank() &&
-                    nicknameText.isNotBlank() &&
-                    birthdayInt.isNotBlank()
+                    nameText.isNotBlank() &&
+                    ageText.isNotBlank()
                 ) {
-                    val user = User(idText, pwText, nicknameText, birthdayInt)
+                    val user = User(idText, pwText, nameText, emailText, ageText.toInt())
 
-                    userViewModel.signUpUser(user.id, user.pw, user.nickname, user.birthday)
+                    userViewModel.signUpUser(user.id, user.pw, user.name, user.email, user.age.toInt())
                     Toast.makeText(context, "회원가입 완료! 로그인 화면으로 돌아갑니다.", Toast.LENGTH_SHORT).show()
                     onSignUpComplete(user)
                 } else {
