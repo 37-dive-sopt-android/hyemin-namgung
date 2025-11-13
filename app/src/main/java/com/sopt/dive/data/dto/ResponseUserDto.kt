@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 enum class Status { ACTIVE }
 
 @Serializable
-data class ResponseSignupDto(
+data class ResponseUserDto(
     @SerialName("id")
     val id: Int,
 
