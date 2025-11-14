@@ -18,17 +18,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sopt.dive.data.dto.RequestLoginDto
 import com.sopt.dive.ui.components.CommonButton
 import com.sopt.dive.ui.components.CommonInputField
 import com.sopt.dive.viewmodel.UserViewModel
+import okhttp3.Request
 
 @Composable
 fun LoginScreen(
     userViewModel: UserViewModel,
-    onLoginSuccess: (String, String) -> Unit,
+    onLoginSuccess: () -> Unit,
     onSignUpClick: () -> Unit
 ) {
-    val context = LocalContext.current
 
     var idText by remember { mutableStateOf("") }
     var pwText by remember { mutableStateOf("") }
@@ -51,7 +52,10 @@ fun LoginScreen(
             value = idText,
             onValueChange = { idText = it },
             placeMessage = "아이디를 입력해주세요",
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next, keyboardType = KeyboardType.Text)
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Text
+            )
         )
 
         CommonInputField(
@@ -59,7 +63,10 @@ fun LoginScreen(
             value = pwText,
             onValueChange = { pwText = it },
             placeMessage = "비밀번호를 입력해주세요",
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done, keyboardType = KeyboardType.Password),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Done,
+                keyboardType = KeyboardType.Password
+            ),
             visualTransformation = PasswordVisualTransformation()
         )
 
@@ -67,11 +74,8 @@ fun LoginScreen(
 
         CommonButton(
             onClick = {
-                if (userViewModel.loginUser(idText, pwText)) {
-                    onLoginSuccess(idText, pwText)
-                } else {
-                    Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
-                }
+                val request = RequestLoginDto(idText, pwText)
+                userViewModel.loginUser(request)
             },
             textMessage = "로그인"
         )
@@ -81,10 +85,11 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 40.dp)
-                .clickable (onClick =  onSignUpClick ),
+                .clickable(onClick = onSignUpClick),
             textAlign = TextAlign.Center,
             fontSize = 15.sp,
             style = TextStyle(textDecoration = TextDecoration.Underline, color = Color.Gray)
         )
     }
+
 }

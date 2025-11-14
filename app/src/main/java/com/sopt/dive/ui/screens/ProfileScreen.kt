@@ -44,7 +44,7 @@ fun ProfileScreen(paddingValues: PaddingValues, userViewModel: UserViewModel) {
 
         Text(text = "Name: ${user?.name}", fontSize = 20.sp)
 
-        Text(text = "Age: ${user?.email}", fontSize = 20.sp)
+        Text(text = "Email: ${user?.email}", fontSize = 20.sp)
 
         Text(text = "Age: ${user?.age}", fontSize = 20.sp)
 
