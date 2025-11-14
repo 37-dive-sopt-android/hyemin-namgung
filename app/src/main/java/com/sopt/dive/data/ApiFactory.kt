@@ -2,6 +2,8 @@ package com.sopt.dive.data
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.sopt.dive.BuildConfig
+import com.sopt.dive.data.api.AuthService
+import com.sopt.dive.data.api.UserService
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -19,12 +21,29 @@ object ApiFactory {
         .addInterceptor(loggingInterceptor)
         .build()
 
+    private val json = Json {
+        explicitNulls = false
+    }
+
     val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
-            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType())).build()
+            .addConverterFactory(
+                json.asConverterFactory("application/json".toMediaType())
+            )
+            .build()
     }
 
     inline fun <reified T> create(): T = retrofit.create(T::class.java)
+}
+
+object ServicePool {
+    val userService: UserService by lazy {
+        ApiFactory.create<UserService>()
+    }
+
+    val authService: AuthService by lazy {
+        ApiFactory.create<AuthService>()
+    }
 }

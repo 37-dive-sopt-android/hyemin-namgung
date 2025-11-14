@@ -1,6 +1,7 @@
 package com.sopt.dive.util
 
 import Route
+import android.widget.Toast
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -11,12 +12,14 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.lifecycle.createSavedStateHandle
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -67,7 +70,6 @@ fun Navigator(navController: NavHostController = rememberNavController()) {
             }
         }
     )
-    val currentUser by userViewModel.currentUser.collectAsState()
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     val showBottomBar = currentRoute !in listOf(Route.Login.path, Route.SignUp.path)
 
@@ -99,29 +101,48 @@ fun Navigator(navController: NavHostController = rememberNavController()) {
             startDestination = Route.Login.path
         ) {
             composable(Route.Login.path) {
+                val loginSuccess by userViewModel.loginSuccess.collectAsState()
+
                 LoginScreen(
                     userViewModel = userViewModel,
-                    onLoginSuccess = { userName, password ->
-                        val user = userViewModel.currentUser.value
-                        if (user != null && user.id == userName && user.pw == password) {
+                    onLoginSuccess = {
+                        navController.navigate(Route.Home.path) {
+                            popUpTo(Route.Login.path) { inclusive = true }
+                            launchSingleTop = true
+                        }
+
+                    },
+                    onSignUpClick = {
+                        navController.navigate(Route.SignUp.path)
+                    }
+
+                )
+                val context = LocalContext.current
+                LaunchedEffect(loginSuccess) {
+                    when (loginSuccess) {
+                        true -> {
                             navController.navigate(Route.Home.path) {
                                 popUpTo(Route.Login.path) { inclusive = true }
                                 launchSingleTop = true
                             }
                         }
-                    },
-                    onSignUpClick = {
-                        navController.navigate(Route.SignUp.path)
+
+                        false -> {
+                            Toast.makeText(context, "로그인 실패 ", Toast.LENGTH_SHORT).show()
+                        }
+
+                        null -> ""
                     }
-                )
+                }
             }
 
             composable(Route.SignUp.path) {
                 SignUpScreen(
                     userViewModel = userViewModel,
-                    onSignUpComplete = { user ->
-                        navController.popBackStack(Route.Login.path, inclusive = false)
-                    }
+                    onSignUpComplete =
+                        {
+                            navController.popBackStack(Route.Login.path, inclusive = false)
+                        }
                 )
             }
 
@@ -130,7 +151,12 @@ fun Navigator(navController: NavHostController = rememberNavController()) {
             }
 
             composable(Route.Profile.path) {
-                currentUser?.let { ProfileScreen(innerPadding, userViewModel) }
+                val loggedInUserId by userViewModel.loggedInUserId.collectAsState()
+                ProfileScreen(innerPadding, userViewModel)
+
+                LaunchedEffect(loggedInUserId) {
+                    loggedInUserId?.let { userViewModel.fetchUser(it) }
+                }
             }
 
             composable(Route.Settings.path) {
