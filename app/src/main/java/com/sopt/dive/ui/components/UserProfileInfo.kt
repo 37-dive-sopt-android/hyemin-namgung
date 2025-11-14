@@ -35,9 +35,11 @@ import com.sopt.dive.ui.theme.SubPinkBackground
 fun UserProfileCard(user: HomeProfileInfo, modifier: Modifier = Modifier) {
     var isFollowing by remember { mutableStateOf(false) }
 
-    Row(modifier = modifier
-        .fillMaxWidth()
-        .padding(12.dp)) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(12.dp)
+    ) {
 
         Image(
             painter = painterResource(id = R.drawable.profile_photo),
@@ -48,7 +50,11 @@ fun UserProfileCard(user: HomeProfileInfo, modifier: Modifier = Modifier) {
             contentScale = ContentScale.Crop,
         )
         Column(modifier.padding(horizontal = 30.dp)) {
-            Text(user.title, Modifier.padding(top = 2.dp, bottom = 7.dp), fontWeight = FontWeight.Bold)
+            Text(
+                user.title,
+                Modifier.padding(top = 2.dp, bottom = 7.dp),
+                fontWeight = FontWeight.Bold
+            )
             Text(user.content)
         }
 
@@ -79,5 +85,11 @@ fun UserProfileCard(user: HomeProfileInfo, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun InputPreview() {
-    UserProfileCard(HomeProfileInfo(userName = "gey", title =  "ddd", content =  "gkdl dkssud qldhk duddnjsgl"))
+    UserProfileCard(
+        HomeProfileInfo(
+            userName = "gey",
+            title = "ddd",
+            content = "gkdl dkssud qldhk duddnjsgl"
+        )
+    )
 }
