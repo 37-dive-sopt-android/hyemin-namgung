@@ -16,7 +16,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sopt.dive.model.User
+import com.sopt.dive.data.dto.RequestSignupDto
 import com.sopt.dive.ui.components.CommonButton
 import com.sopt.dive.ui.components.CommonInputField
 import com.sopt.dive.ui.validators.InputValidators
@@ -26,7 +26,7 @@ import com.sopt.dive.viewmodel.UserViewModel
 @Composable
 fun SignUpScreen(
     userViewModel: UserViewModel,
-    onSignUpComplete: (User) -> Unit
+    onSignUpComplete: () -> Unit
 ) {
     val context = LocalContext.current
     var idText by remember { mutableStateOf("") }
@@ -137,20 +137,15 @@ fun SignUpScreen(
             onClick = {
 
                 if (
-                    idError == null &&
-                    pwError == null &&
-                    nameError == null &&
-                    ageError == null &&
-                    idText.isNotBlank() &&
-                    pwText.isNotBlank() &&
-                    nameText.isNotBlank() &&
-                    ageText.isNotBlank()
+                    idError == null && pwError == null && nameError == null && emailError == null && ageError == null &&
+                    idText.isNotBlank() && pwText.isNotBlank() && nameText.isNotBlank() && emailText.isNotBlank() && ageText.isNotBlank()
                 ) {
-                    val user = User(idText, pwText, nameText, emailText, ageText.toInt())
+                    val request =
+                        RequestSignupDto(idText, pwText, nameText, emailText, ageText.toInt())
 
-                    userViewModel.signUpUser(user.id, user.pw, user.name, user.email, user.age.toInt())
+                    userViewModel.signUpUser(request)
                     Toast.makeText(context, "회원가입 완료! 로그인 화면으로 돌아갑니다.", Toast.LENGTH_SHORT).show()
-                    onSignUpComplete(user)
+                    onSignUpComplete()
                 } else {
                     Toast.makeText(context, "모든 정보를 입력해주세요", Toast.LENGTH_SHORT).show()
                 }
