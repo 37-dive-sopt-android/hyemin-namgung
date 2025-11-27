@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.sopt.dive.data.ServicePool
 import com.sopt.dive.data.dto.RequestLoginDto
 import com.sopt.dive.data.dto.RequestSignupDto
-import com.sopt.dive.data.dto.ResponseLoginDto
 import com.sopt.dive.data.dto.ResponseUserDto
 import com.sopt.dive.data.dto.ResponseUserBodyDto
 import com.sopt.dive.model.User

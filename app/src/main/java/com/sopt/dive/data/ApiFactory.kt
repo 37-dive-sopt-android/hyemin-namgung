@@ -2,8 +2,6 @@ package com.sopt.dive.data
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.sopt.dive.BuildConfig
-import com.sopt.dive.data.api.AuthService
-import com.sopt.dive.data.api.UserService
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
