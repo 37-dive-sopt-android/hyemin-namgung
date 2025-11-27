@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -68,7 +67,8 @@ fun CardScreen(paddingValues: PaddingValues) {
 
     Column(
         modifier = Modifier
-            .fillMaxSize().padding(paddingValues)
+            .fillMaxSize()
+            .padding(paddingValues)
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -103,7 +103,7 @@ fun CardScreen(paddingValues: PaddingValues) {
                     rotationY = rotation.value % 360f,
                     cameraDistance = 12f * 80
                 )
-                .border(2.dp, Color.Gray,RoundedCornerShape(40.dp))
+                .border(2.dp, Color.Gray, RoundedCornerShape(40.dp))
                 .shadow(8.dp, RoundedCornerShape(40.dp))
                 .padding(2.dp)
         ) {

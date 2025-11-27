@@ -1,4 +1,3 @@
-
 sealed class Route(val path: String) {
     object Login : Route("login")
     object SignUp : Route("signup")
