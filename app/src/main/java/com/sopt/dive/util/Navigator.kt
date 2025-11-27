@@ -20,6 +20,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.lifecycle.createSavedStateHandle
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -101,7 +102,7 @@ fun Navigator(navController: NavHostController = rememberNavController()) {
             startDestination = Route.Login.path
         ) {
             composable(Route.Login.path) {
-                val loginSuccess by userViewModel.loginSuccess.collectAsState()
+                val loginSuccess by userViewModel.loginSuccess.collectAsStateWithLifecycle()
 
                 LoginScreen(
                     userViewModel = userViewModel,

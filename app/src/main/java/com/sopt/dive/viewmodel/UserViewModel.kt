@@ -4,6 +4,7 @@ package com.sopt.dive.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import com.sopt.dive.data.ServicePool
 import com.sopt.dive.data.dto.RequestLoginDto
 import com.sopt.dive.data.dto.RequestSignupDto
@@ -14,6 +15,7 @@ import com.sopt.dive.model.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -73,26 +75,29 @@ class UserViewModel(
 
 
     fun loginUser(request : RequestLoginDto){
-        authService.login(request).enqueue(object : Callback<ResponseLoginDto>{
-            override fun onResponse(call: Call<ResponseLoginDto>, response: Response<ResponseLoginDto>) {
-                Log.d("login_status", "HTTP status: ${response.code()}")
-                if (response.isSuccessful) {
+        viewModelScope.launch {
+            try {
+                val response = authService.login(request)
+                Log.d("==== login","=====HTTP Status : ${response.code()}")
+
+                if(response.isSuccessful){
                     val body = response.body()
                     _loggedInUserId.value = body?.data?.userId
-                    _loginSuccess.value = body?.success == true
-                    Log.d("login_success", "로그인 성공: $body")
+                    _loginSuccess.value = body?.success ==true
                     _loggedInUserId.value?.let { fetchUser(it) }
-                } else {
+                }else {
                     _loginSuccess.value = false
-                    Log.e("login_error", "오류: ${response.code()} / ${response.errorBody()?.string()}")
-                }
-            }
+                    Log.e("=====login_error","오류: ${response.code()}")
 
-            override fun onFailure(call: Call<ResponseLoginDto>, t: Throwable) {
-               Log.e("login_failure",t.message.toString())
+                    Log.e("=====login_errorBody","오류: ${response.body().toString()}")
+                }
+            }catch (t: Throwable){
+                Log.e("===login_failure",t.message.toString())
                 _loginSuccess.value = false
             }
-        })
+        }
+
+
     }
 
     fun fetchUser(userId: Int) {
