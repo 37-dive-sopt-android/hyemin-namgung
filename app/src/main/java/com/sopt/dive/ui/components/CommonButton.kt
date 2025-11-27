@@ -10,9 +10,13 @@ import androidx.compose.ui.graphics.Color
 import com.sopt.dive.ui.theme.MainPinkBackground
 
 @Composable
-fun CommonButton(textMessage: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun CommonButton(
+    textMessage: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier) {
     Button(
-        onClick = onClick, modifier.fillMaxWidth(),
+        onClick = onClick,
+        modifier = modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
             containerColor = MainPinkBackground,
             contentColor = Color.White

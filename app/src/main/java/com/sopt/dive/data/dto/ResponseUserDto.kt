@@ -23,7 +23,7 @@ enum class Status { ACTIVE }
 @Serializable
 data class ResponseUserDto(
     @SerialName("id")
-    val id: Int,
+    val id: Long,
 
     @SerialName("username")
     val username: String,
