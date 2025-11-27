@@ -30,7 +30,6 @@ import com.sopt.dive.R
 import com.sopt.dive.model.HomeProfileInfo
 import com.sopt.dive.ui.theme.SubPinkBackground
 
-
 @Composable
 fun UserProfileCard(user: HomeProfileInfo, modifier: Modifier = Modifier) {
     var isFollowing by remember { mutableStateOf(false) }

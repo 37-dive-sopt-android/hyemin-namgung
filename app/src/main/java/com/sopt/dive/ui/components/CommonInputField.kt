@@ -1,6 +1,5 @@
 package com.sopt.dive.ui.components
 
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -66,7 +65,6 @@ fun CommonInputField(
         )
     }
 
-
 }
 
 @Preview
@@ -83,6 +81,4 @@ private fun CommonInputFieldPreview() {
         ),
         visualTransformation = PasswordVisualTransformation(),
     )
-
 }
-
