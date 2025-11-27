@@ -3,6 +3,7 @@ package com.sopt.dive.data.api
 import com.sopt.dive.data.dto.RequestSignupDto
 import com.sopt.dive.data.dto.ResponseUserBodyDto
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -12,10 +13,10 @@ interface UserService {
     @POST("api/v1/users")
     fun signup(
         @Body request: RequestSignupDto
-    ): Call<ResponseUserBodyDto>
+    ): Response<ResponseUserBodyDto>
 
     @GET("api/v1/users/{id}")
     fun fetchUserInfo(
         @Path("id") id: Int,
-    ): Call<ResponseUserBodyDto>
+    ): Response<ResponseUserBodyDto>
 }
