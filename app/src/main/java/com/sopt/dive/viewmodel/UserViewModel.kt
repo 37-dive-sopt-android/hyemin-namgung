@@ -47,29 +47,47 @@ class UserViewModel(
     val currentUser: StateFlow<User?> = _currentUser.asStateFlow()
 
     fun signUpUser(request: RequestSignupDto) {
-        userService.signup(request).enqueue(object : Callback<ResponseUserBodyDto> {
+//        userService.signup(request).enqueue(object : Callback<ResponseUserBodyDto> {
+//
+//            override fun onResponse(
+//                call: Call<ResponseUserBodyDto>,
+//                response: Response<ResponseUserBodyDto>
+//            ) {
+//                Log.d("signup_status", "HTTP status: ${response.code()}")
+//                if (response.isSuccessful) {
+//                    val user = response.body()?.data?.toUser()
+//                    _currentUser.value = user
+//                    _userDetail.value = user
+//                    Log.d("signup success", "회원가입 성공: ${response.body()}")
+//                } else {
+//                    Log.e("signup error", "Server error: ${response.code()}/ 메시지: ${
+//                        response.errorBody()?.string()
+//                    }")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<ResponseUserBodyDto>, t: Throwable) {
+//                Log.e("signup failure", t.message.toString())
+//            }
+//        })
+        viewModelScope.launch {
+            try {
+                val response = userService.signup(request)
+                Log.d("====SignUp", "====HTTP Status: ${response.code()}")
+                if (response.isSuccessful){
+                    val body = response.body()
+                    val user = body?.data?.toUser()
 
-            override fun onResponse(
-                call: Call<ResponseUserBodyDto>,
-                response: Response<ResponseUserBodyDto>
-            ) {
-                Log.d("signup_status", "HTTP status: ${response.code()}")
-                if (response.isSuccessful) {
-                    val user = response.body()?.data?.toUser()
                     _currentUser.value = user
                     _userDetail.value = user
-                    Log.d("signup success", "회원가입 성공: ${response.body()}")
-                } else {
-                    Log.e("signup error", "Server error: ${response.code()}/ 메시지: ${
-                        response.errorBody()?.string()
-                    }")
                 }
+                else {
+                    Log.e("signup_error","오류: ${response.code()}")
+                }
+            }catch (t: Throwable){
+                Log.e("SignUp - Failure ",t.message.toString())
             }
-
-            override fun onFailure(call: Call<ResponseUserBodyDto>, t: Throwable) {
-                Log.e("signup failure", t.message.toString())
-            }
-        })
+        }
     }
 
 
@@ -100,25 +118,47 @@ class UserViewModel(
     }
 
     fun fetchUser(userId: Int) {
-        userService.fetchUserInfo(userId).enqueue(object : Callback<ResponseUserBodyDto> {
-            override fun onResponse(
-                call: Call<ResponseUserBodyDto>,
-                response: Response<ResponseUserBodyDto>
-            ) {
+//        userService.fetchUserInfo(userId).enqueue(object : Callback<ResponseUserBodyDto> {
+//            override fun onResponse(
+//                call: Call<ResponseUserBodyDto>,
+//                response: Response<ResponseUserBodyDto>
+//            ) {
+//                if (response.isSuccessful) {
+//                    val user = response.body()?.data?.toUser()
+//                    _currentUser.value = user
+//                    _userDetail.value = user
+//                    Log.d("fetch success", "유저 정보 조회 성공: $user")
+//                } else {
+//                    Log.e("fetch error", "오류: ${response.code()} / ${response.errorBody()?.string()}")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<ResponseUserBodyDto>, t: Throwable) {
+//                Log.e("fetch failure", t.message.toString())
+//            }
+//        })
+        viewModelScope.launch {
+            try {
+                val response = userService.fetchUserInfo(userId)
+                Log.d("==== fetchUser","=====HTTP Status : ${response.code()}")
+
                 if (response.isSuccessful) {
-                    val user = response.body()?.data?.toUser()
+                    val body = response.body()
+                    val user = body?.data?.toUser()
+
                     _currentUser.value = user
                     _userDetail.value = user
+
                     Log.d("fetch success", "유저 정보 조회 성공: $user")
                 } else {
-                    Log.e("fetch error", "오류: ${response.code()} / ${response.errorBody()?.string()}")
+                    Log.e("fetch error", "오류: ${response.code()}")
+                    Log.e("fetch errorBody", "오류: ${response.errorBody()?.string()}")
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseUserBodyDto>, t: Throwable) {
+            } catch (t: Throwable) {
                 Log.e("fetch failure", t.message.toString())
             }
-        })
+        }
     }
     private fun ResponseUserDto.toUser(): User {
         return User(
